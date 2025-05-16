@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link crossorigin="anonymous"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link href="/public/css/panel.css" rel="stylesheet">
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <title>Panel</title>
+</head>
+
+<body>
+<main class="d-flex">
+    <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
+        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+           href="/">
+            <span class="fs-4">Compartir es cuidar ♥</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/pages/panel.html">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/colaboradores.html">
+                    Colaboradores
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/heladeras.html">
+                    Heladeras
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/persona-vulnerable.html">
+                    Personas vulnerables
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/viandas.html">
+                    Viandas
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/suscripcion.html">
+                    Suscripción
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/reportar-falla-tecnica.html">
+                    Reportar falla técnica
+                </a>
+            </li>
+            <li>
+                <a aria-current="page" class="nav-link  active" href="/pages/colaboraciones.html">
+                    Colaboraciones
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="dashboard overflow-y-auto">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary border bg-white">
+            <div class="btn-group dropstart mr-3">
+                <a aria-expanded="false"
+                   class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" href="#">
+                    <img alt="" class="rounded-circle me-2" height="32"
+                         src="https://github.com/rama054.png"
+                         width="32">
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="p-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h3>Donaciones</h3>
+                    </div>
+                    <div>
+                        <div class="d-grid gap-2 d-md-block mb-3 text-center">
+                            <button class="btn btn-primary" data-form="form1"
+                                    onclick="showForm(this)">Donación de
+                                vianda
+                            </button>
+                            <button class="btn btn-warning" data-form="form2"
+                                    onclick="showForm(this)">Donación de
+                                dinero
+                            </button>
+                            <button class="btn btn-success" data-form="form3"
+                                    onclick="showForm(this)">Distribución de
+                                viandas
+                            </button>
+                            <button class="btn btn-info" data-form="form4"
+                                    onclick="showForm(this)">
+                                Hacerse cargo de
+                                heladera
+                            </button>
+                            <button class="btn btn-dark" data-form="form5"
+                                    onclick="showForm(this)">
+                                Realizar
+                                oferta/agregar producto
+                            </button>
+                            <button class="btn btn-danger" data-form="form6"
+                                    onclick="showForm(this)">Registrar persona
+                                vulnerable
+                            </button>
+                        </div>
+
+
+                        <!-- Formulario 1 -->
+                        <div class="formulario" id="form1" style="display:none;">
+                            <h4>Donación de viandas</h4>
+                            <form onsubmit="event.preventDefault(); generarFormulariosViandas();">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="donacion_cant_viandas">Ingrese
+                                                la cantidad de
+                                                viandas que desea donar</label>
+                                            <input class="form-control" id="donacion_cant_viandas"
+                                                   min="1"
+                                                   type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary mb-3" type="submit">Generar
+                                    formularios
+                                </button>
+                            </form>
+
+                            <form action="/donacion_vianda" id="formularioGlobal" method="POST">
+                                <div id="viandasFormContainer"></div>
+                                <button class="btn btn-primary mb-3" id="submitViandas"
+                                        style="display: none;"
+                                        type="submit">Cargar viandas
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Formulario 2 -->
+                        <div class="formulario" id="form2" style="display:none;">
+                            <h4>Donación de dinero</h4>
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="donacion_cant_dinero">Ingrese
+                                                la cantidad de
+                                                dinero que desea donar</label>
+                                            <input class="form-control" id="donacion_cant_dinero"
+                                                   type="number">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="donar_frecuencia">¿Desea
+                                                donar con
+                                                frecuencia?</label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" id="frecuencia_si"
+                                                       name="donar_frecuencia"
+                                                       onchange="toggleFrecuenciaField(this)"
+                                                       type="radio"
+                                                       value="si">
+                                                <label class="form-check-label"
+                                                       for="frecuencia_si">Sí</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input checked class="form-check-input"
+                                                       id="frecuencia_no"
+                                                       name="donar_frecuencia"
+                                                       onchange="toggleFrecuenciaField(this)"
+                                                       type="radio" value="no">
+                                                <label class="form-check-label"
+                                                       for="frecuencia_no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" id="frecuencia_donacion"
+                                     style="display:none;">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="frecuencia">Indique la
+                                                frecuencia de la
+                                                donación (en dias)</label>
+                                            <input class="form-control" id="frecuencia"
+                                                   type="number">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary" type="submit">Enviar</button>
+                            </form>
+                        </div>
+
+
+                        <!-- Formulario 3 -->
+                        <div class="formulario" id="form3" style="display:none;">
+                            <h4>Distribución de viandas</h4>
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="heladera_origen">Ingrese
+                                                la heladera
+                                                origen</label>
+                                            <select class="form-select" id="heladera_origen">
+                                                <option selected>Seleccione una opción</option>
+                                                <option value="12313">Cordoba y medrano</option>
+                                                <option value="12314">Obelisco</option>
+                                                <option value="12315">Av. Corrientes 2654</option>
+                                                <option value="12316">Av. Libertador 3682</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="heladera_destino">Ingrese
+                                                la heladera
+                                                destino</label>
+                                            <select class="form-select" id="heladera_destino">
+                                                <option selected>Seleccione una opción</option>
+                                                <option value="12313">Cordoba y medrano</option>
+                                                <option value="12314">Obelisco</option>
+                                                <option value="12315">Av. Corrientes 2654</option>
+                                                <option value="12316">Av. Libertador 3682</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="cant_viandas">Ingrese la
+                                                cantidad de viandas
+                                                a mover</label>
+                                            <input class="form-control" id="cant_viandas" min="1"
+                                                   type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="motivo_distribucion">Motivo
+                                                de la
+                                                distribución</label>
+                                            <select class="form-select" id="motivo_distribucion">
+                                                <option value="desperfecto">Desperfecto en la
+                                                    heladera
+                                                </option>
+                                                <option value="falta_viandas">Falta de viandas en
+                                                    la
+                                                    heladera destino
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="fecha_distribucion">Fecha
+                                                de
+                                                distribución</label>
+                                            <input class="form-control" id="fecha_distribucion"
+                                                   type="date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-success" type="submit">Enviar</button>
+                            </form>
+                        </div>
+
+                        <!-- Formulario 4 -->
+                        <div class="formulario" id="form4" style="display:none;">
+                            <h4>Hacerse cargo de heladera</h4>
+                            <form id="cantidadHeladerasForm">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="cantidad_heladeras">Ingrese
+                                                la cantidad de
+                                                heladeras</label>
+                                            <input class="form-control" id="cantidad_heladeras"
+                                                   min="1" type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-info mb-3"
+                                        onclick="generarFormulariosHeladeras()" type="button">
+                                    Generar formularios
+                                </button>
+                            </form>
+
+                            <!-- Contenedor para los formularios generados -->
+                            <form action="/hacerse_cargo_heladera" id="formulariosHeladeras"
+                                  method="POST">
+                                <div id="formulariosHeladerasContainer"></div>
+                                <!-- Este div contendrá los formularios generados -->
+                                <button class="btn btn-primary mb-3" id="submitHeladeras"
+                                        style="display: none;"
+                                        type="submit">Cargar heladeras
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Formulario 5 -->
+                        <div class="formulario" id="form5" style="display:none;">
+                            <h4>Realizar oferta/agregar producto</h4>
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label"
+                                                   for="canje_nombre">Nombre</label>
+                                            <input class="form-control" id="canje_nombre" min="1"
+                                                   type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="rubro">Rubro</label>
+                                            <select class="form-select" id="heladera_destino">
+                                                <option selected>Seleccione un rubro</option>
+                                                <option value="gas">Gastronomía</option>
+                                                <option value="ele">Electrónica</option>
+                                                <option value="aph">Artículos para el hogar
+                                                </option>
+                                                <option value="auto">Automotriz</option>
+                                                <option value="syb">Salud y belleza</option>
+                                                <option value="dyf">Deportes y fitness</option>
+                                                <option value="tef">Tecnología e informática
+                                                </option>
+                                                <option value="vyt">Viajes y turismo</option>
+                                                <option value="otro">Otro</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-label" for="canje_puntos">Puntos
+                                                necesarios</label>
+                                            <input class="form-control" id="canje_puntos" min="1"
+                                                   type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col" id="falla_tecnica_foto">
+                                        <div class="form-group">
+                                            <label class="form-label" for="canje_producto">Foto del
+                                                producto</label>
+                                            <input class="form-control" id="formFile" type="file">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-dark" type="submit">Enviar</button>
+                            </form>
+                        </div>
+
+                        <!-- Formulario 6 -->
+                        <div class="formulario" id="form6" style="display:none;">
+                            <h4>Registrar persona vulnerable</h4>
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre</label>
+                                            <input class="form-control" id="nombre" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="Fecha de nacimiento">Fecha de
+                                                nacimiento</label>
+                                            <input class="form-control" id="Fecha de nacimiento"
+                                                   type="date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="Fecha de alta">Fecha de alta</label>
+                                            <input class="form-control" id="Fecha de alta"
+                                                   type="date">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="Domicilio">Domicilio</label>
+                                            <input class="form-control" id="Domicilio" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="Menores a cargo">Menores a cargo</label>
+                                            <input class="form-control" id="Menores a cargo"
+                                                   type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="tipo-documento">Tipo de documento</label>
+                                            <select aria-label="tipo-documento"
+                                                    class="form-select">
+                                                <option selected>Seleccione una opcion</option>
+                                                <option value="dni">Documento Nacional de Identidad
+                                                    (DNI)
+                                                </option>
+                                                <option value="le">Libreta de Enrolamiento (LE)
+                                                </option>
+                                                <option value="lc">Libreta Cívica (LC)</option>
+                                                <option value="ci">Cédula de Identidad (CI)
+                                                </option>
+                                                <option value="ti">Tarjeta de Identidad (TI)
+                                                </option>
+                                                <option value="pasaporte">Pasaporte</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="Numero de documento">Número de
+                                                documento</label>
+                                            <input class="form-control" id="Numero de documento"
+                                                   type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="form-group mb-3">
+                                            <label for="tipo-documento">Tarjeta asociada</label>
+                                            <select aria-label="tipo-documento"
+                                                    class="form-select">
+                                                <option selected>Seleccione una tarjeta</option>
+                                                <option value="t1">Tarjeta 1</option>
+                                                <option value="t2">Tarjeta 2</option>
+                                                <option value="t3">Tarjeta 3</option>
+                                                <option value="t4">Tarjeta 4</option>
+                                                <option value="t5">Tarjeta 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" type="submit">Cargar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</main>
+<script src="/public/js/jquery.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/colaboraciones.js"></script>
+</body>
+
+</html>

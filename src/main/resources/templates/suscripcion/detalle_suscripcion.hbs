@@ -1,0 +1,95 @@
+{{#partial "contenido"}}
+    <div class="container">
+        <h2 class="mb-4">Detalle de la Suscripcion</h2>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="card-title">Suscripcion #<span
+                                id="suscripcion-id">{{suscripcion.id}}</span></h3>
+                        <p class="card-text"><strong>Heladera:</strong> <span
+                                id="heladera-id">{{suscripcion.heladera.id}}</span></p>
+                        <p class="card-text"><strong>Tipo:</strong> <span
+                                id="tipo">{{suscripcion.tipoSuscripcion.getTipo}}</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="card-text"><strong>Colaborador:</strong>
+                            <span id="colaborador">
+                                {{#if suscripcion.colaborador.nombre}}
+                                    {{suscripcion.colaborador.nombre}} {{suscripcion.colaborador.apellido}}
+                                {{else}}
+                                    {{suscripcion.colaborador.razonSocial}}
+                                {{/if}}
+                            </span>
+                        </p>
+                        <p class="card-text"><strong>Medio de Contacto:</strong> <span
+                                id="medio-de-contacto">{{suscripcion.medioDeContacto.contacto}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Detalles de la Suscripcion</h4>
+                <table class="table table-striped">
+                    {{#if suscripcion.tipoSuscripcion.esMuchasViandas}}
+                        <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Viandas Maximas</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{suscripcion.id}}</td>
+                            <td>{{suscripcion.tipoSuscripcion.valorMuchasViandas}}</td>
+                        </tr>
+                        </tbody>
+                    {{/if}}
+
+                    {{#if suscripcion.esPocasViandas}}
+                        <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Viandas Minimas</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{suscripcion.id}}</td>
+                            <td>{{suscripcion.tipoSuscripcion.valorPocasViandas}}</td>
+                        </tr>
+                        </tbody>
+                    {{/if}}
+
+                    {{#if contribucion.esDesperfectoHeladera}}
+                        <thead>
+
+                        <tr>
+                            <th>ID</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{suscripcion.id}}</td>
+                        </tr>
+                        </tbody>
+                    {{/if}}
+                </table>
+            </div>
+        </div>
+
+
+        <div class="mt-4">
+            <a href="/suscripcion" class="btn btn-secondary">Volver a la Lista</a>
+            <a href="/suscripcion/eliminar_suscripcion/{{suscripcion.id}}" class="btn btn-danger">Eliminar
+                Suscripcion</a>
+        </div>
+    </div>
+
+
+{{/partial}}
+{{> templates/base}}

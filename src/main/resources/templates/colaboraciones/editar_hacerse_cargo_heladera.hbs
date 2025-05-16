@@ -1,0 +1,135 @@
+{{#partial "formulario"}}
+    <div id="form5" class="formulario">
+        <h4>Editar Hacerse cargo heladera</h4>
+        <form method="POST"
+              action="/colaboraciones/formulario/editar_hacerse_cargo_heladera/{{contribucion.id}}">
+            <input type="hidden" name="contribucion_id" value="{{contribucion.id}}">
+            <input type="hidden" name="id" value="{{heladera.id}}">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="capacidad_viandas">Capacidad de viandas</label>
+                        <input type="number" class="form-control" id="capacidad_viandas"
+                               name="capacidad_viandas"
+                               value="{{heladera.capacidadViandas}}" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fecha_funcionamiento">Fecha funcionamiento</label>
+                        <input type="date" class="form-control" id="fecha_funcionamiento"
+                               name="fecha_funcionamiento"
+                               value="{{heladera.fechaDeInicio}}" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="nombre">Estado heladera</label>
+                        <select class="form-select" aria-label="contribucion"
+                                name="estado_heladera"
+                                required>
+                            <option value="" selected>Seleccione un estado</option>
+                            {{#each estadosHeladera}}
+                                <option value="{{valor}}">{{valor}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="temp_max">Temperatura máxima (en °C)</label>
+                        <input type="number" class="form-control" id="temp_max" name="temp_max"
+                               value="{{heladera.temperaturaMaxima}}" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="temp_min">Temperatura mínima (en °C)</label>
+                        <input type="number" class="form-control" id="temp_min" name="temp_min"
+                               value="{{heladera.temperaturaMinima}}" required>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="calle_id"
+                   value="{{heladera.puntoGeografico.direccion.calle.id}}">
+            <input type="hidden" name="direccion_id"
+                   value="{{heladera.puntoGeografico.direccion.id}}">
+            <input type="hidden" name="puntoGeografico_id" value="{{heladera.puntoGeografico.id}}">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="calle">Calle</label>
+                        <input type="text" class="form-control" id="calle" name="calle"
+                               value="{{heladera.puntoGeografico.direccion.calle.nombre}}"
+                               required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="altura">Altura</label>
+                        <input type="number" class="form-control" id="altura" name="altura"
+                               value="{{heladera.puntoGeografico.direccion.altura}}" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="codigoPostal">Código Postal</label>
+                        <input type="number" class="form-control" id="codigoPostal"
+                               name="codigoPostal"
+                               value="{{heladera.puntoGeografico.direccion.codigoPostal}}"
+                               required>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="ciudad">Ciudad</label>
+                        <select class="form-select" aria-label="contribucion" name="ciudad_id"
+                                required>
+                            <option value="" disabled>Seleccione una ciudad</option>
+                            {{#each ciudades}}
+                                <option value="{{this.id}}">
+                                    {{this.nombre}}
+                                </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="localidad">Localidad</label>
+                        <select class="form-select" aria-label="contribucion" name="localidad_id"
+                                required>
+                            <option value="" disabled>Seleccione una localidad</option>
+                            {{#each localidades}}
+                                <option value="{{this.id}}">
+                                    {{this.nombre}}
+                                </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="provincia">Provincia</label>
+                        <select class="form-select" aria-label="contribucion" name="provincia_id"
+                                required>
+                            <option value="" disabled>Seleccione una provincia</option>
+                            {{#each provincias}}
+                                <option value="{{this.id}}">
+                                    {{this.nombre}}
+                                </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark">Enviar</button>
+        </form>
+    </div>
+{{/partial}}
+{{> templates/colaboraciones/colaboraciones}}

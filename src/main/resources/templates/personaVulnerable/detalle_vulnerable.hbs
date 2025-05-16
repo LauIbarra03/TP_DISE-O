@@ -1,0 +1,96 @@
+{{#partial "contenido"}}
+    <div class="container">
+        <h2 class="mb-4">Detalle de Persona Vulnerable</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="https://via.placeholder.com/150" alt="Foto de la Persona"
+                             class="img-fluid rounded-circle mb-3">
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="card-title">
+                            <span id="nombre">
+                                {{vulnerable.nombre}}
+                            </span>
+                        </h3>
+                        <p class="card-text"><strong>ID:</strong>
+                            <span id="id">{{vulnerable.id}}</span>
+                        </p>
+                        <p class="card-text"><strong>Fecha de Nacimiento:</strong>
+                            <span id="fecha-nacimiento">
+                                {{vulnerable.fechaDeNacimiento}}
+                            </span>
+                        </p>
+                        <p class="card-text"><strong>Dirección:</strong>
+                            <span id="direccion">
+                                {{#if vulnerable.direccion}}
+                                    {{vulnerable.direccion.calle.nombre}} {{vulnerable.direccion.altura}}
+                                    , {{vulnerable.direccion.codigoPostal}}
+                                {{else}}
+                                    No disponible
+                                {{/if}}
+                            </span>
+                        </p>
+                        <p class="card-text"><strong>Tipo de Documento:</strong>
+                            <span id="tipo-documento">
+                                {{#if vulnerable.tipoDocumento}}
+                                    {{tipoDocuStr}}
+                                {{else}}
+                                    No disponible
+                                {{/if}}
+                            </span>
+                        </p>
+                        <p class="card-text"><strong>Nro. Documento:</strong>
+                            <span id="nro-documento">
+                                {{#if vulnerable.numeroDocumento}}
+                                    {{vulnerable.numeroDocumento}}
+                                {{else}}
+                                    No disponible
+                                {{/if}}
+                            </span>
+                        </p>
+                        <p class="card-text"><strong>Cantidad de menores a cargo:</strong> <span
+                                id="nro-documento">
+                            {{vulnerable.cantidadDeMenoresACargo}}
+                        </span></p>
+                    </div>
+                </div>
+                <hr>
+                <h4 class="mt-4">Historial de Usos de tarjetas</h4>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Vianda retirada</th>
+                        <th>Hora</th>
+                    </tr>
+                    </thead>
+                    <tbody id="asistencia-list">
+                    <!--                    TODO, HACER Q SE GUARDEN EL USO DE TARJETAS Y TRAERLAS ACA-->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="mt-4">
+                    {{#if user.isJuridica}}
+
+                    {{else}}
+                        <a href="/persona_vulnerable/editar_vulnerable/{{vulnerable.id}}"
+                           class="btn btn-primary">Editar
+                            Información</a>
+                        <a href="/persona_vulnerable/eliminar_vulnerable/{{vulnerable.id}}"
+                           class="btn btn-danger">Eliminar
+                            Vulnerable</a>
+                    {{/if}}
+                    <a href="/persona_vulnerable" class="btn btn-secondary">Volver a la Lista</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{/partial}}
+{{> templates/base}}

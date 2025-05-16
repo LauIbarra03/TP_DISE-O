@@ -1,0 +1,61 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Formulario para reportar fallas técnicas</h3>
+            </div>
+            <div>
+                <form method="POST" action="/reportar_falla_tecnia" enctype="multipart/form-data"
+                      id="miFormulario"
+                      data-url="/reportar_falla_tecnia">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group mb-3">
+                                <label for="heladera_id">Heladera</label>
+                                <select class="form-select" aria-label="heladera"
+                                        name="heladera_id"
+                                        required>
+                                    <option value="" disabled selected>Seleccione una heladera
+                                    </option>
+                                    {{#each heladeras}}
+                                        <option value="{{this.id}}">
+                                            {{this.puntoGeografico.direccion.calle.nombre}} {{this.puntoGeografico.direccion.altura}}
+                                            ,
+                                            {{this.puntoGeografico.direccion.codigoPostal}}
+                                            , {{this.puntoGeografico.direccion.ciudad.nombre}}
+                                        </option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="descripcion">Descripción (opcional)</label>
+                                <textarea class="form-control" id="descripcion_falla_tecnica"
+                                          rows="2"
+                                          name="descripcion_falla_tecnica" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col" id="falla_tecnica_foto">
+                            <div class="form-group">
+                                <label for="falla_tecnica_foto" class="form-label">Foto</label>
+                                <input class="form-control" type="file" id="falla_tecnica_foto"
+                                       name="falla_tecnica_foto">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="boton_carga_formulario"
+                            onclick="initializeFormHandler('formSolicitudApertura')">Cargar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{{/partial}}
+{{> templates/base}}
+

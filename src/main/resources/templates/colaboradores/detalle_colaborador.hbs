@@ -1,0 +1,126 @@
+{{#partial "contenido"}}
+    <div class="container">
+        <h2 class="mb-4">Detalle del Colaborador</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="https://via.placeholder.com/150" alt="Foto del Colaborador"
+                             class="img-fluid rounded-circle mb-3">
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="card-title">
+                            {{#if colaborador.nombre}}
+                                {{colaborador.nombre}} {{colaborador.apellido}}
+                            {{else if colaborador.razonSocial}}
+                                {{colaborador.razonSocial}}
+                            {{else}}
+                                Nombre
+                            {{/if}}
+
+                        </h3>
+                        <p class="card-text"><strong>ID:</strong> {{colaborador.id}}</p>
+                        <p class="card-text"><strong>Email:</strong>
+                            {{#if correo}}
+                                {{this.correo.contacto}}
+                            {{else}}
+                                No disponible
+                            {{/if}}
+                        </p>
+                        <p class="card-text"><strong>Teléfono:</strong>
+                            {{#if telefono}}
+                                {{this.telefono.contacto}}
+                            {{else}}
+                                No disponible
+                            {{/if}}
+                        </p>
+                        <p class="card-text"><strong>Dirección:</strong>
+                            {{#if colaborador.direccion}}
+                                {{colaborador.direccion.calle.nombre}} {{colaborador.direccion.altura}}
+                                , {{colaborador.direccion.codigoPostal}}
+                            {{else}}
+                                No disponible
+                            {{/if}}
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <h4 class="mt-4">Información Adicional</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Fecha de Inicio:</strong>
+                            {{colaborador.fechaAlta}}
+                        </p>
+                        <p><strong>Tipo persona:</strong>
+                            {{colaborador.tipoPersona.nombre}}
+                        </p>
+                        <p><strong>Fecha de Nacimiento:</strong>
+                            {{#if colaborador.fechaNacimiento}}
+                                {{colaborador.fechaNacimiento}}
+                            {{else}}
+                                No disponible
+                            {{/if}}
+                        </p>
+                        <p><strong>Formas de contribuir:</strong></p>
+                        <ul>
+                            {{#each formasContribuir}}
+                                <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>WhatsApp:</strong>
+                            {{#if whatsapp}}
+                                {{this.whatsapp.contacto}}
+                            {{else}}
+                                No disponible
+                            {{/if}}
+                        </p>
+                        <p><strong>Telegram:</strong>
+                            {{#if telegram}}
+                                {{this.telegram.contacto}}
+                            {{else}}
+                                No disponible
+                            {{/if}}
+                        </p>
+                        <p><strong>Estado:</strong>
+                            {{#if colaborador.activo}}
+                                <span class="badge bg-success">
+                                Activo
+                            </span>
+                            {{else }}
+                                <span class="badge bg-danger">
+                                Inactivo
+                            </span>
+                            {{/if}}
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <h4>Historial de Colaboraciones</h4>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Tipo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#each contribuciones}}
+                            <tr>
+                                <td>{{this.fechaHora}}</td>
+                                <td>{{this.getTipo}}</td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4">
+
+                    <a href="/colaboradores" class="btn btn-secondary">Volver a la Lista</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

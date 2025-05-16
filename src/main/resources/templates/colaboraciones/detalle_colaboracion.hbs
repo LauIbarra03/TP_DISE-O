@@ -1,0 +1,205 @@
+{{#partial "contenido"}}
+    <div class="container">
+        <h2 class="mb-4">Detalle de la Colaboración</h2>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="card-title">Colaboración #<span
+                                id="colaboracion-id">{{contribucion.id}}</span></h3>
+                        <p class="card-text"><strong>Fecha:</strong> <span
+                                id="fecha">{{contribucion.fechaHora}}</span>
+                        </p>
+                        <p class="card-text"><strong>Tipo:</strong> <span
+                                id="tipo">{{contribucion.getTipo}}</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="card-text"><strong>Colaborador:</strong>
+                            <span id="colaborador">
+                                {{#if contribucion.colaborador.nombre}}
+                                    {{contribucion.colaborador.nombre}} {{contribucion.colaborador.apellido}}
+                                {{else}}
+                                    {{contribucion.colaborador.razonSocial}}
+                                {{/if}}
+                            </span>
+                        </p>
+                        <p class="card-text"><strong>Estado:</strong>
+                            <span id="estado"
+                                  class="badge {{#if
+                                          contribucion.activo}}bg-success{{else}}bg-danger{{/if}}">
+                                {{#if contribucion.activo}}Activa{{else}}No Activa{{/if}}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Detalles de la Colaboración</h4>
+                <table class="table table-striped">
+                    {{#if contribucion.esDistribucionViandas}}
+                        <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Heladera origen</th>
+                            <th>Heladera destino</th>
+                            <th>Viandas Distribuidas</th>
+                            <th>Motivo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{contribucion.id}}</td>
+                            <td>
+                                #{{contribucion.heladeraOrigen.id}} {{contribucion.heladeraOrigen.puntoGeografico.direccion.localidad.nombre}}
+                                , {{contribucion.heladeraOrigen.puntoGeografico.direccion.localidad.provincia.nombre}}</td>
+                            <td>
+                                #{{contribucion.heladeraDestino.id}} {{contribucion.heladeraDestino.puntoGeografico.direccion.localidad.nombre}}
+                                , {{contribucion.heladeraDestino.puntoGeografico.direccion.localidad.provincia.nombre}}</td>
+                            <td>{{contribucion.cantidadViandas}}</td>
+                            <td>{{contribucion.motivo}}</td>
+                        </tr>
+                        </tbody>
+                    {{/if}}
+
+                    {{#if contribucion.esDonacionDinero}}
+                        <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Monto</th>
+                            <th>Frecuencia</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{contribucion.id}}</td>
+                            <td>{{contribucion.cantidadDinero}}</td>
+                            <td>
+                                {{#if contribucion.frecuencia}}
+                                    {{contribucion.frecuencia}}
+                                {{else}}
+                                    No especificado
+                                {{/if}}
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    {{/if}}
+
+                    {{#if contribucion.esDonacionVianda}}
+                    <thead>
+                        {{#each contribucion.viandas}}
+                        <tr>
+                            <th>ID</th>
+                            <th>Comida</th>
+                            <th>Fecha Caducidad</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{contribucion.id}}</td>
+                            <td>{{this.comida.nombre}}</td>
+                            <td>{{this.fechaCaducidad}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                    {{/if}}
+                    {{#if contribucion.esRegistrarPersonaVulnerable}}
+                        <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Nro. Documento</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{contribucion.nuevoVulnerable.id}}</td>
+                            <td>{{contribucion.nuevoVulnerable.nombre}}</td>
+                            <td>
+                                {{#if contribucion.nuevoVulnerable.direccion}}
+                                    {{contribucion.nuevoVulnerable.direccion.calle.nombre}} {{contribucion.nuevoVulnerable.direccion.altura}}
+                                    , {{contribucion.nuevoVulnerable.direccion.codigoPostal}}
+                                {{else}}
+                                    No posee
+                                {{/if}}
+                            </td>
+                            <td>
+                                {{#if contribucion.nuevoVulnerable.numeroDocumento}}
+                                    {{contribucion.nuevoVulnerable.tipoDocumento}} {{contribucion.nuevoVulnerable.numeroDocumento}}
+                                {{else}}
+                                    No posee
+                                {{/if}}
+                            </td>
+                        </tr>
+                        </tbody>
+
+                    {{/if}}
+                    {{#if contribucion.esRealizarOfertas}}
+                        <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Rubro</th>
+                            <th>Puntos</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{contribucion.id}}</td>
+                            <td>{{contribucion.nuevaProducto.nombre}}</td>
+                            <td>{{contribucion.nuevaProducto.rubro.rubro}}</td>
+                            <td>{{contribucion.nuevaProducto.cantidadDePuntos}}</td>
+                        </tr>
+                        </tbody>
+                    {{/if}}
+                    {{#if contribucion.esHacerseCargoHeladera}}
+                        <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Capacidad Viandas</th>
+                            <th>Dirección</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{contribucion.id}}</td>
+                            <td>{{contribucion.nuevaHeladera.capacidadViandas}}</td>
+                            <td>{{contribucion.nuevaHeladera.puntoGeografico.direccion.calle.nombre}} {{contribucion.nuevaHeladera.puntoGeografico.direccion.altura}}
+                                , {{contribucion.nuevaHeladera.puntoGeografico.direccion.codigoPostal}}</td>
+                        </tr>
+                        </tbody>
+                    {{/if}}
+                </table>
+            </div>
+        </div>
+
+
+        <div class="mt-4">
+            {{#if contribucion.esDonacionDinero}}
+                <a href="/colaboraciones/formulario/editar_donacion_dinero/{{contribucion.id}}"
+                   class="btn btn-primary">Editar
+                    Colaboración</a>
+                <!--                TODO, PONER EL BOTON DE ELIMINADO BIEN -->
+            {{/if}}
+
+            {{#if contribucion esHacerseCargoHeladera}}
+                <a href="/colaboraciones/formulario/editar_hacerse_cargo_heladera/{{contribucion.id}}"
+                   class="btn btn-primary">Editar Colaboración</a>
+            {{/if}}
+
+            <a href="/colaboraciones" class="btn btn-secondary">Volver a la Lista</a>
+            <a href="/colaboraciones/eliminar_colaboracion/{{contribucion.id}}"
+               class="btn btn-danger">Eliminar
+                Colaboración</a>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

@@ -1,0 +1,119 @@
+{{#partial "formulario"}}
+    <div id="form3" class="formulario">
+        <h4>Distribución de viandas</h4>
+        <form method="POST" action="/colaboraciones/formulario/distribucion_viandas"
+              id="miFormulario">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="heladera_origen" class="form-label">Ingrese la heladera
+                            origen</label>
+                        <select class="form-select" id="heladera_origen" name="heladera_origen"
+                                required>
+                            <option value="" disabled selected>Seleccione una heladera</option>
+                            {{#each heladeras}}
+                                <option value="{{this.id}}">
+                                    {{this.puntoGeografico.direccion.calle.nombre}} {{this.puntoGeografico.direccion.altura}}
+                                    ,
+                                    {{this.puntoGeografico.direccion.codigoPostal}}
+                                    , {{this.puntoGeografico.direccion.ciudad.nombre}}
+                                </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="heladera_destino" class="form-label">Ingrese la heladera
+                            destino</label>
+                        <select class="form-select" id="heladera_destino" name="heladera_destino"
+                                required>
+                            <option value="" disabled selected>Seleccione una heladera</option>
+                            {{#each heladeras}}
+                                <option value="{{this.id}}">
+                                    {{this.puntoGeografico.direccion.calle.nombre}} {{this.puntoGeografico.direccion.altura}}
+                                    ,
+                                    {{this.puntoGeografico.direccion.codigoPostal}}
+                                    , {{this.puntoGeografico.direccion.ciudad.nombre}}
+                                </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="viandas_origen" class="form-label">Seleccione las viandas a
+                            mover</label>
+                        <div id="viandas_origen">
+
+                            <!-- Este contenedor se rellenará dinámicamente con JavaScript -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="motivo_distribucion" class="form-label">Motivo de la
+                            distribución</label>
+                        <select class="form-select" id="motivo_distribucion"
+                                name="motivo_distribucion" required>
+                            <option value="desperfecto">Desperfecto en la heladera</option>
+                            <option value="falta_viandas">Falta de viandas en la heladera destino
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fecha_distribucion" class="form-label">Fecha de
+                            distribución</label>
+                        <input type="date" class="form-control" id="fecha_distribucion"
+                               name="fecha_distribucion"
+                               required>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success"
+                    onclick="initializeFormHandler('miFormulario')">Enviar
+            </button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Asegúrate de reemplazar los códigos HTML para comillas dobles (&quot;)
+            const viandasJson = '{{json viandas}}'.replace(/&quot;/g, '"');
+            const viandas = JSON.parse(viandasJson); // Ahora es un JSON válido
+
+            console.log("Viandas: ", viandas);
+
+            const heladeraOrigenSelect = document.getElementById("heladera_origen");
+            const viandasOrigenContainer = document.getElementById("viandas_origen");
+
+            heladeraOrigenSelect.addEventListener("change", () => {
+                const heladeraId = heladeraOrigenSelect.value;
+                console.log("Heladera seleccionada:", heladeraId);
+
+                const viandasFiltradas = viandas.filter(vianda => vianda.heladeraID == heladeraId);
+                console.log("Viandas filtradas:", viandasFiltradas);
+
+                if (viandasFiltradas.length > 0) {
+                    viandasOrigenContainer.innerHTML = viandasFiltradas.map(vianda => `
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="vianda_${vianda.id}" name="viandas[]" value="${vianda.id}">
+                        <label class="form-check-label" for="vianda_${vianda.id}">${vianda.comidaNombre}</label>
+                    </div>
+                `).join("");
+                } else {
+                    viandasOrigenContainer.innerHTML = "<p>No hay viandas disponibles para esta heladera.</p>";
+                }
+            });
+        });
+    </script>
+{{/partial}}
+{{> templates/colaboraciones/colaboraciones}}

@@ -1,0 +1,41 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Viandas</h3>
+                {{#if user.isAdmin}}
+                    <a href="/colaboraciones/formulario/donacion_vianda" class="btn btn-primary">Agregar
+                        vianda</a>
+                {{else if user.esHumana}}
+                    <a href="/colaboraciones/formulario/donacion_vianda" class="btn btn-primary">Agregar
+                        vianda</a>
+                {{else if user.esJuridica}}
+
+                {{/if}}
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <th>Comida</th>
+                <th>Fecha de caducidad</th>
+                <th>Heladera</th>
+                </thead>
+                <tbody>
+                {{#each viandas}}
+                    <tr onclick="window.location.href='/viandas/detalle_vianda/{{this.id}}'"
+                        style="cursor: pointer;">
+                        <th>{{this.comida.nombre}}</th>
+                        <th>{{this.fechaCaducidad}}</th>
+                        <th>
+                            {{this.heladera.puntoGeografico.direccion.calle.nombre}} {{this.heladera.puntoGeografico.direccion.altura}}
+                            ,
+                            {{this.heladera.puntoGeografico.direccion.codigoPostal}}
+                        </th>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+{{/partial}}
+{{> templates/base}}

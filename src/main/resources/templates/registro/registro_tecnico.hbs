@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>{{titulo}}</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-10">
+            <div class="card border rounded-2">
+                <div class="card-body p-0">
+                    <div class="row no-gutters">
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h3 class="h4 font-weight-bold text-theme">Registro de
+                                        Técnico</h3>
+                                </div>
+
+                                <p class="text-muted text-center mt-2 mb-5">
+                                    Completa los datos para registrarte como técnico en la
+                                    plataforma.
+                                </p>
+
+                                <form method="POST" action="/registro_tecnico"
+                                      id="formulario_tecnico">
+                                    <input type="hidden" name="id">
+
+                                    <div class="form-group mb-3">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" id="usuario"
+                                               name="usuario" required>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" id="password"
+                                               name="password" required>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="nombre">Nombre</label>
+                                                <input type="text" class="form-control" id="nombre"
+                                                       name="nombre" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="apellido">Apellido</label>
+                                                <input type="text" class="form-control"
+                                                       id="apellido" name="apellido" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Campos de documento -->
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="tipo-documento">Tipo de
+                                                    documento</label>
+                                                <select class="form-select"
+                                                        aria-label="tipo-documento"
+                                                        name="tipo_docu" required>
+                                                    <option value="" selected disabled>Seleccione
+                                                        una opción
+                                                    </option>
+                                                    {{#each tiposDocumento}}
+                                                        <option value="{{valor}}">{{descripcion}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="numero_docu">Número de
+                                                    documento</label>
+                                                <input type="text" class="form-control"
+                                                       id="numero_docu" name="numero_docu"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="cuil">CUIL</label>
+                                                <input type="text" class="form-control" id="cuil"
+                                                       name="cuil" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label>Medio de Contacto Preferido</label>
+
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input"
+                                                   id="contactEmail" name="medioContacto"
+                                                   value="email" required>
+                                            <label class="form-check-label" for="contactEmail">Email</label>
+                                            <input type="email" class="form-control mt-2"
+                                                   id="email" name="email"
+                                                   placeholder="Ingrese su email">
+                                        </div>
+
+                                        <div class="form-check mt-3">
+                                            <input type="radio" class="form-check-input"
+                                                   id="contactTelefono" name="medioContacto"
+                                                   value="telefono" required>
+                                            <label class="form-check-label" for="contactTelefono">Teléfono</label>
+                                            <input type="text" class="form-control mt-2"
+                                                   id="telefono" name="telefono"
+                                                   placeholder="Ingrese su teléfono">
+                                        </div>
+
+                                        <div class="form-check mt-3">
+                                            <input type="radio" class="form-check-input"
+                                                   id="contactWhatsapp" name="medioContacto"
+                                                   value="whatsapp" required>
+                                            <label class="form-check-label" for="contactWhatsapp">WhatsApp</label>
+                                            <input type="text" class="form-control mt-2"
+                                                   id="whatsapp" name="whatsapp"
+                                                   placeholder="Ingrese su número de WhatsApp">
+                                        </div>
+
+                                        <div class="form-check mt-3">
+                                            <input type="radio" class="form-check-input"
+                                                   id="contactTelegram" name="medioContacto"
+                                                   value="telegram" required>
+                                            <label class="form-check-label" for="contactTelegram">Telegram</label>
+                                            <input type="text" class="form-control mt-2"
+                                                   id="telegram" name="telegram"
+                                                   placeholder="Ingrese su usuario de Telegram">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="provincia">Provincia</label>
+                                        <select class="form-select" id="provincia" name="provincia"
+                                                required>
+                                            <option value="" selected disabled>Seleccione una
+                                                provincia
+                                            </option>
+                                            {{#each provincias}}
+                                                <option value="{{this.nombre}}">{{this.nombre}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="areas_cobertura">Áreas de Cobertura (presione
+                                            control para seleccionar más de uno)</label>
+                                        <select class="form-select" id="areasCobertura"
+                                                name="areasCobertura" multiple required>
+                                            <option value="" disabled>Seleccione sus localidades
+                                            </option>
+                                        </select>
+                                        <small class="form-text text-muted">Seleccione una o más
+                                            localidades.</small>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        Registrarse
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.getElementById("provincia").addEventListener("change", async function () {
+        const provinciaId = this.value;
+        const localidadesSelect = document.getElementById("areasCobertura");
+
+        // Limpia las opciones actuales
+        localidadesSelect.innerHTML = '<option value="" disabled>Seleccione sus localidades</option>';
+
+        if (!provinciaId) return;
+
+        try {
+            // Llama a la API de Georef para obtener las localidades de la provincia seleccionada
+            const url = `https://apis.datos.gob.ar/georef/api/localidades?provincia=${provinciaId}&campos=id,nombre&max=100`
+            console.log(url);
+            const response = await fetch(url);
+            const data = await response.json();
+
+            // Verifica que se hayan devuelto localidades
+            if (data.localidades && data.localidades.length > 0) {
+                data.localidades.forEach((localidad) => {
+                    const option = document.createElement("option");
+                    option.value = localidad.nombre;
+                    option.textContent = localidad.nombre;
+                    localidadesSelect.appendChild(option);
+                });
+            } else {
+                alert("No se encontraron localidades para la provincia seleccionada.");
+            }
+        } catch (error) {
+            console.error("Error al obtener las localidades:", error);
+            alert("Hubo un problema al cargar las localidades. Por favor, intente nuevamente.");
+        }
+    });
+</script>
+
+<script>
+    const radios = document.querySelectorAll('[name="medioContacto"]');
+    const contactFields = {
+        email: document.getElementById('email'),
+        telefono: document.getElementById('telefono'),
+        whatsapp: document.getElementById('whatsapp'),
+        telegram: document.getElementById('telegram')
+    };
+
+    // Función para manejar los campos obligatorios de contacto
+    function toggleContactFields() {
+        // Resetea los campos
+        Object.values(contactFields).forEach(field => {
+            field.removeAttribute('required');
+            field.disabled = true;
+        });
+
+        // Verifica cuál campo fue seleccionado
+        const selectedContact = document.querySelector('[name="medioContacto"]:checked');
+        if (selectedContact) {
+            const selectedField = contactFields[selectedContact.value];
+            if (selectedField) {
+                selectedField.removeAttribute('disabled');
+                selectedField.setAttribute('required', 'required');
+            }
+        }
+    }
+
+    // Actualiza los campos de contacto según el medio de contacto seleccionado
+    radios.forEach(radio => {
+        radio.addEventListener('change', toggleContactFields);
+    });
+
+    // Inicializa los campos de contacto
+    toggleContactFields();
+
+    // Función para manejar la validación de los campos
+    function handleFormSubmission(formId) {
+        const formulario = document.getElementById(formId);
+        let isValid = true;
+
+        // Limpiar los mensajes de error anteriores
+        const requiredFields = formulario.querySelectorAll('[required]');
+        requiredFields.forEach(field => field.setCustomValidity(''));
+
+        // Verificar si los campos requeridos están completos
+        requiredFields.forEach(field => {
+            if (field.type === 'radio') {
+                if (!formulario.querySelector(`[name="${field.name}"]:checked`)) {
+                    isValid = false;
+                    field.setCustomValidity('Este campo es requerido.');
+                    field.reportValidity();
+                }
+            } else if (!field.value) {
+                isValid = false;
+                field.setCustomValidity('Este campo es requerido.');
+                field.reportValidity();
+            }
+        });
+
+        // Verificar áreas de cobertura
+        const areasCobertura = formulario.querySelector('#areasCobertura');
+        if (!areasCobertura.selectedOptions.length) {
+            isValid = false;
+            areasCobertura.setCustomValidity('Debe seleccionar al menos una área de cobertura.');
+            areasCobertura.reportValidity();
+        }
+
+        // Si todo es válido, enviar el formulario
+        if (isValid) {
+            const formData = new FormData(formulario);
+            fetch('/registro_tecnico', {
+                method: 'POST',
+                body: formData
+            })
+                    .then(async response => {
+                        if (response.ok) {
+                            Swal.fire({
+                                icon: "success",
+                                text: "¡Gracias por registrarte!",
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                window.location.href = '/panel';
+                            });
+                        } else {
+                            const errorData = await response.json();
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: errorData.error || "Hubo un error al procesar el registro. Intente nuevamente.",
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error al enviar el formulario:", error);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Hubo un error al procesar el registro. Intente nuevamente.",
+                        });
+                    });
+        }
+    }
+
+    document.querySelector('form').onsubmit = (e) => {
+        e.preventDefault();
+        handleFormSubmission('formulario_tecnico');
+    };
+</script>
+</body>
+
+</html>

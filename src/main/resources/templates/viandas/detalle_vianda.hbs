@@ -1,0 +1,74 @@
+{{#partial "contenido"}}
+    <div class="container">
+        <h2 class="mb-4">Detalle de la Vianda</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="card-title">Vianda #<span id="vianda-id">{{vianda.id}}</span>
+                        </h3>
+                        <p class="card-text"><strong>Comida:</strong> <span
+                                id="comida">{{vianda.comida.nombre}}</span>
+                        </p>
+                        <p class="card-text"><strong>Fecha de caducidad:</strong> <span
+                                id="fecha-caducidad">{{vianda.fechaCaducidad}}</span></p>
+                        <p class="card-text"><strong>Heladera ID:</strong> #<span
+                                id="heladera">{{vianda.heladera.id}}</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="card-text"><strong>Calorías:</strong> <span
+                                id="calorias">{{vianda.calorias}}
+                            kcal</span></p>
+                        <p class="card-text"><strong>Peso:</strong> <span id="peso">{{vianda.peso}}
+                            g</span></p>
+                        <p class="card-text"><strong>Fecha de donación:</strong> <span
+                                id="fecha-donacion">{{vianda.fechaAlta}}</span></p>
+                        <p class="card-text"><strong>Estado:</strong>
+                            <span id="estado"
+                                  class="badge {{#if
+                                          vianda.isEntregada}}bg-success{{else}}bg-warning{{/if}}">
+                                {{#if vianda.isEntregada}}Entregada{{else}}No entregada{{/if}}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <div class="mt-4">
+
+
+                    {{#if user.esJuridica}}
+                        <a href="/viandas" class="btn btn-secondary">Volver a la Lista</a>
+                    {{else}}
+                        {{#if vianda.isEntregada}}
+                            <a href="/viandas" class="btn btn-secondary">Volver a la Lista</a>
+                            <a href="/viandas/editar_vianda/{{vianda.id}}" class="btn btn-primary">Editar
+                                Información</a>
+                            <a href="/viandas/eliminar_vianda/{{vianda.id}}"
+                               class="btn btn-danger">Eliminar
+                                vianda</a>
+
+                        {{else}}
+                            <a href="/viandas" class="btn btn-secondary">Volver a la Lista</a>
+                            <a href="/viandas/editar_vianda/{{vianda.id}}" class="btn btn-primary">Editar
+                                Información</a>
+                            <form action="/viandas/detalle_vianda/{{vianda.id}}" method="POST"
+                                  style="display:inline;">
+                                <button type="submit" class="btn btn-success">Marcar como
+                                    Entregada
+                                </button>
+                            </form>
+                            <a href="/viandas/eliminar_vianda/{{vianda.id}}"
+                               class="btn btn-danger">Eliminar
+                                vianda</a>
+
+                        {{/if}}
+
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{{/partial}}
+{{> templates/base}}

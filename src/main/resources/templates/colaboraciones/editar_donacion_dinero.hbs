@@ -1,0 +1,69 @@
+{{#partial "formulario"}}
+    <div id="form2" class="formulario">
+        <h4>Editar donación de dinero</h4>
+        <form method="POST"
+              action="/colaboraciones/formulario/editar_donacion_dinero/{{contribucion.id}}">
+            <input type="hidden" name="id" value="{{contribucion.id}}">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="donacion_cant_dinero" class="form-label">Ingrese la cantidad de
+                            dinero que desea
+                            donar</label>
+                        <input type="number" class="form-control" id="donacion_cant_dinero"
+                               name="donacion_cant_dinero"
+                               value="{{contribucion.cantidadDinero}}">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fecha_donacion" class="form-label">Fecha donación</label>
+                        <input type="date" class="form-control" id="fecha_donacion"
+                               name="fecha_donacion"
+                               value="{{contribucion.fechaAlta}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="donar_frecuencia" class="form-label">¿Desea donar con
+                            frecuencia?</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="frecuencia_si" name="donar_frecuencia"
+                                   value="si"
+                                   class="form-check-input" onchange="toggleFrecuenciaField(this)">
+                            <label for="frecuencia_si" class="form-check-label">Sí</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="frecuencia_no" name="donar_frecuencia"
+                                   value="no"
+                                   class="form-check-input" onchange="toggleFrecuenciaField(this)"
+                                   checked>
+                            <label for="frecuencia_no" class="form-check-label">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3" id="frecuencia_donacion" style="display:none;">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="frecuencia" class="form-label">Indique la frecuencia de la
+                            donación (en
+                            dias)</label>
+                        <input type="number" class="form-control" id="frecuencia" name="frecuencia"
+                               value="{{contribucion.frecuencia}}">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+
+    {{#partial "scripts_forms"}}
+        <script src="/js/donacion_dinero.js"></script>
+    {{/partial}}
+{{/partial}}
+{{> templates/colaboraciones/colaboraciones}}

@@ -1,0 +1,38 @@
+body {
+    background-color: #f1f2f5 !important;
+    height: 100vh;
+}
+
+
+main {
+    height: 100vh;
+    height: -webkit-fill-available;
+    max-height: 100vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.sidebar {
+    background-color: #0f235e !important;
+}
+
+.dashboard {
+    flex: 1 1 0%;
+}
+
+.dashboard > nav {
+    display: flex;
+    justify-content: end;
+}
+
+
+.mainContanier {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+}
+
+.mainContanier main {
+    overflow-y: auto;
+    /*  height: calc(100vh - 72px); */
+}

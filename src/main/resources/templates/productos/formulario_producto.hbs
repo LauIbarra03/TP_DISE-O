@@ -1,0 +1,19 @@
+{{#partial "contenido"}}
+    <div class="my-5">
+        <h3>Agregar nuevo producto</h3>
+        <form method="POST" action="/productos">
+            <div class="mb-3">
+                <label for="productName" class="form-label">Nombre del producto</label>
+                <input name="nombre" type="text" class="form-control" id="productName"
+                       placeholder="Ingrese el nombre del producto">
+            </div>
+            <div class="mb-3">
+                <label for="productPrice" class="form-label">Precio</label>
+                <input name="precio" type="number" class="form-control" id="productPrice"
+                       placeholder="Ingrese el precio">
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar producto</button>
+        </form>
+    </div>
+{{/partial}}
+{{> templates/base }}

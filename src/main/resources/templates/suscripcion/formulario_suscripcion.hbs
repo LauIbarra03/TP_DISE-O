@@ -1,0 +1,68 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Formulario de suscripción</h3>
+            </div>
+            <div>
+                <form method="POST" action="/suscripcion/formulario_suscripcion" id="miFormulario"
+                      data-url="/suscripcion/formulario_suscripcion">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group mb-3">
+                                <label for="suscripcion_heladera_id">Selecciona a que heladera
+                                    desea
+                                    suscribirse</label>
+                                <select class="form-select" id="suscripcion_heladera_id"
+                                        aria-label="suscripcion_heladera"
+                                        name="suscripcion_heladera_id" required>
+                                    <option value="" disabled selected>Seleccione una heladera
+                                    </option>
+                                    {{#each heladeras}}
+                                        <option value="{{this.id}}">{{this.puntoGeografico.direccion.calle.nombre}} {{this.puntoGeografico.direccion.altura}}
+                                            ,
+                                            {{this.puntoGeografico.direccion.codigoPostal}}
+                                            , {{this.puntoGeografico.direccion.ciudad.nombre}}
+                                        </option>
+                                    {{/each}}
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group mb-3">
+                                <label for="tipo_suscripcion_id">Tipo de suscripción</label>
+                                <select class="form-select" id="tipo_suscripcion_id"
+                                        aria-label="tipo_suscripcion_id"
+                                        onchange="toggleNumeroViandas()" name="tipo_suscripcion_id"
+                                        required>
+                                    <option value="" disabled selected>Seleccione una opción
+                                    </option>
+                                    <option value="pv">Hay pocas viandas</option>
+                                    <option value="mv">Hay muchas viandas</option>
+                                    <option value="dh">Desperfecto heladera</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col" id="numero-viandas-group" style="display: none;">
+                            <div class="form-group">
+                                <label for="numero_viandas">Número de viandas</label>
+                                <input type="text" class="form-control" id="numero_viandas"
+                                       name="numero_viandas">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="boton_carga_formulario"
+                            onclick="initializeFormHandler('miFormulario')">Cargar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{#partial "scripts"}}
+        <script src="/js/suscripcion.js"></script>
+    {{/partial}}
+{{/partial}}
+{{> templates/base}}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link crossorigin="anonymous"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link href="/public/css/panel.css" rel="stylesheet">
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <title>Panel</title>
+</head>
+
+<body>
+<main class="d-flex">
+    <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
+        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+           href="/">
+            <span class="fs-4">Compartir es cuidar ♥</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/pages/panel.html">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a aria-current="page" class="nav-link active" href="/pages/colaboradores.html">
+                    Colaboradores
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/heladeras.html">
+                    Heladeras
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/persona-vulnerable.html">
+                    Personas vulnerables
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/viandas.html">
+                    Viandas
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/suscripcion.html">
+                    Suscripción
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/reportar-falla-tecnica.html">
+                    Reportar falla técnica
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/colaboraciones.html">
+                    Colaboraciones
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="dashboard">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary border bg-white">
+            <div class="btn-group dropstart mr-3">
+                <a aria-expanded="false"
+                   class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" href="#">
+                    <img alt="" class="rounded-circle me-2" height="32"
+                         src="https://github.com/rama054.png"
+                         width="32">
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="p-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h3>Colaboradores</h3>
+                        <div>
+                            <a class="btn btn-primary" href="/pages/agregar-colaborador.html">Agregar
+                                colaborador</a>
+                            <button class="btn btn-info" data-bs-target="#modal-csv"
+                                    data-bs-toggle="modal"
+                                    type="button">
+                                Cargar CSV
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <th>Nombre y apellido</th>
+                        <th>Modo de colaboracion</th>
+                        <th>Contacto</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>Jaime Fulanito</th>
+                            <th>Viandas</th>
+                            <th>11-1234-5678</th>
+                        </tr>
+                        <tr>
+                            <th>Jaime Fulanito</th>
+                            <th>Viandas</th>
+                            <th>11-1234-5678</th>
+                        </tr>
+                        <tr>
+                            <th>Jaime Fulanito</th>
+                            <th>Viandas</th>
+                            <th>11-1234-5678</th>
+                        </tr>
+                        <tr>
+                            <th>Jaime Fulanito</th>
+                            <th>Viandas</th>
+                            <th>11-1234-5678</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div aria-hidden="true" aria-labelledby="cargar-csv" class="modal fade" id="modal-csv"
+             tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="cargar-csv">Cargar archivo CSV</h1>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                type="button"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="formFile">CSV</label>
+                            <input class="form-control" id="formFile" type="file">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
+                            Cerrar
+                        </button>
+                        <button class="btn btn-primary" type="button">Subir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</main>
+<script src="/public/js/jquery.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+</body>
+
+</html>

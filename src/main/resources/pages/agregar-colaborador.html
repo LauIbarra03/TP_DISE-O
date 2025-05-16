@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link crossorigin="anonymous"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link href="/public/css/panel.css" rel="stylesheet">
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <title>Panel</title>
+</head>
+
+<body>
+<main class="d-flex">
+    <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
+        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+           href="/">
+            <span class="fs-4">Compartir es cuidar ♥</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/pages/panel.html">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a aria-current="page" class="nav-link active" href="/pages/colaboradores.html">
+                    Colaboradores
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/heladeras.html">
+                    Heladeras
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/persona-vulnerable.html">
+                    Personas vulnerables
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/viandas.html">
+                    Viandas
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="dashboard">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary border bg-white">
+            <div class="btn-group dropstart mr-3">
+                <a aria-expanded="false"
+                   class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" href="#">
+                    <img alt="" class="rounded-circle me-2" height="32"
+                         src="https://github.com/rama054.png"
+                         width="32">
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="p-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h3>Formulario de colaboradores</h3>
+                    </div>
+                    <div>
+                        <form>
+                            <div class="form-check">
+                                <input class="form-check-input" id="flexRadioDefault1"
+                                       name="flexRadioDefault"
+                                       type="radio">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Persona Humana
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input checked class="form-check-input" id="flexRadioDefault2"
+                                       name="flexRadioDefault" type="radio">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Persona Juridica
+                                </label>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre</label>
+                                        <input class="form-control" id="nombre" type="text">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="apellido">Apellido</label>
+                                        <input class="form-control" id="apellido" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="Email">Email</label>
+                                        <input class="form-control" id="Email" type="text">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="Telefono">Telefono</label>
+                                        <input class="form-control" id="Telefono" type="text">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="Whatsapp">Whatsapp</label>
+                                        <input class="form-control" id="Whatsapp" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="Direccion">Direccion</label>
+                                        <input class="form-control" id="Direccion" type="text">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="Fecha de nacimiento">Fecha de
+                                            nacimiento</label>
+                                        <input class="form-control" id="Fecha de nacimiento"
+                                               type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="contribucion">Como desea contribuir</label>
+                                <select aria-label="contribucion" class="form-select">
+                                    <option selected>Seleccione una opcion</option>
+                                    <option value="viandas">Donacion de dinero</option>
+                                    <option value="dinero">Donacion de vianda</option>
+                                    <option value="dinero">Distribucion de viandas</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Cargar</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</main>
+<script src="/public/js/jquery.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="/css/panel.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>{{titulo}}</title>
+</head>
+
+<body>
+<main class="d-flex">
+    <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
+        <a href="/panel"
+           class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <span class="fs-4">Compartir es cuidar ♥</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto" id="nav-list">
+            <li class="nav-item">
+                <a href="/panel" class="nav-link text-white" id="panel-link">
+                    Home
+                </a>
+            </li>
+            {{#if user}}
+                {{#if user.isAdmin}}
+                    <li>
+                        <a href="/colaboradores" class="nav-link text-white"
+                           id="colaboradores-link">
+                            Colaboradores
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/heladeras" class="nav-link text-white" id="heladeras-link">
+                            Heladeras
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/visitasTecnicas" class="nav-link text-white"
+                           id="visitasTecnicas-link">
+                            Visitas tecnicas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/persona_vulnerable" class="nav-link text-white"
+                           id="persona-vulnerable-link">
+                            Personas vulnerables
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/viandas" class="nav-link text-white" id="viandas-link">
+                            Viandas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/suscripcion" class="nav-link text-white" id="suscripcion-link">
+                            Suscripción
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/reportar_falla_tecnia" class="nav-link text-white"
+                           id="reportar-falla-link">
+                            Reportar falla técnica
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/colaboraciones" class="nav-link text-white"
+                           id="colaboraciones-link">
+                            Colaboraciones
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/reportes" class="nav-link text-white" id="reportes-link">
+                            Reportes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/tienda" class="nav-link text-white" id="tienda-link">
+                            Tienda
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/productos" class="nav-link text-white" id="productos-link">
+                            Productos
+                        </a>
+                    </li>
+                {{else if user.esHumana}}
+                    <li>
+                        <a href="/heladeras" class="nav-link text-white" id="heladeras-link">
+                            Heladeras
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/persona_vulnerable" class="nav-link text-white"
+                           id="persona-vulnerable-link">
+                            Personas vulnerables
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/viandas" class="nav-link text-white" id="viandas-link">
+                            Viandas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/suscripcion" class="nav-link text-white" id="suscripcion-link">
+                            Suscripción
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/reportar_falla_tecnia" class="nav-link text-white"
+                           id="reportar-falla-link">
+                            Reportar falla técnica
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/solicitudApertura/formulario_solicitudApertura"
+                           class="nav-link text-white"
+                           id="soli-apertura-link">
+                            Solicitar apertura de heladera
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/colaboraciones" class="nav-link text-white"
+                           id="colaboraciones-link">
+                            Colaboraciones
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/reportes" class="nav-link text-white" id="reportes-link">
+                            Reportes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/tienda" class="nav-link text-white" id="tienda-link">
+                            Tienda
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/productos" class="nav-link text-white" id="productos-link">
+                            Productos
+                        </a>
+                    </li>
+
+                {{else if user.esJuridica}}
+                    <li>
+                        <a href="/heladeras" class="nav-link text-white" id="heladeras-link">
+                            Heladeras
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/visitasTecnicas" class="nav-link text-white"
+                           id="visitasTecnicas-link">
+                            Visitas tecnicas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/persona_vulnerable" class="nav-link text-white"
+                           id="persona-vulnerable-link">
+                            Personas vulnerables
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/viandas" class="nav-link text-white" id="viandas-link">
+                            Viandas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/reportar_falla_tecnia" class="nav-link text-white"
+                           id="reportar-falla-link">
+                            Reportar falla técnica
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/colaboraciones" class="nav-link text-white"
+                           id="colaboraciones-link">
+                            Colaboraciones
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/reportes" class="nav-link text-white" id="reportes-link">
+                            Reportes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/tienda" class="nav-link text-white" id="tienda-link">
+                            Tienda
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/productos" class="nav-link text-white" id="productos-link">
+                            Productos
+                        </a>
+                    </li>
+                {{else if user.esTecnico}}
+                    <li>
+                        <a href="/visitasTecnicas/formulario_visitaTecnica"
+                           class="nav-link text-white"
+                           id="registrar_visita-form-link">
+                            Registrar Visita
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/incidentes" class="nav-link text-white" id="incidentes-link">
+                            Incidentes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/visitasTecnicas" class="nav-link text-white" id="visitas-link">
+                            Visitas
+                        </a>
+                    </li>
+                {{/if}}
+            {{/if}}
+
+
+        </ul>
+    </div>
+    <div class="dashboard overflow-y-auto">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary border bg-white">
+            <div class="btn-group dropstart mr-3">
+                <a href="#"
+                   class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/rama054.png" alt="" width="32" height="32"
+                         class="rounded-circle me-2">
+                </a>
+                <ul class="dropdown-menu">
+                    {{#if user.colaborador}}
+                        <li><a class="dropdown-item"
+                               href="/perfil/colaborador/{{user.colaborador.id}}">Perfil</a></li>
+                    {{else}}
+                        <li><a class="dropdown-item" href="/perfil/tecnico/{{user.tecnico.id}}">Perfil</a>
+                        </li>
+                    {{/if}}
+                    <li><a class="dropdown-item" href="/logout">Cerrar Sesion</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="p-4">
+            {{#block "contenido"}}
+            {{/block}}
+        </div>
+    </div>
+</main>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/base.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="module" src="/js/alertas.js"></script>
+
+{{#block "scripts"}}
+
+{{/block}}
+</body>
+
+</html>
+

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link crossorigin="anonymous"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link href="/public/css/panel.css" rel="stylesheet">
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <title>Panel</title>
+</head>
+
+<body>
+<main class="d-flex">
+    <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
+        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+           href="/">
+            <span class="fs-4">Compartir es cuidar ♥</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/pages/panel.html">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/colaboradores.html">
+                    Colaboradores
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/heladeras.html">
+                    Heladeras
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/persona-vulnerable.html">
+                    Personas vulnerables
+                </a>
+            </li>
+            <li>
+                <a aria-current="page" class="nav-link active" href="/pages/viandas.html">
+                    Viandas
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/suscripcion.html">
+                    Suscripción
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/reportar-falla-tecnica.html">
+                    Reportar falla técnica
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/colaboraciones.html">
+                    Colaboraciones
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="dashboard">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary border bg-white">
+            <div class="btn-group dropstart mr-3">
+                <a aria-expanded="false"
+                   class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" href="#">
+                    <img alt="" class="rounded-circle me-2" height="32"
+                         src="https://github.com/rama054.png"
+                         width="32">
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="p-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h3>Colaboradores</h3>
+                        <a class="btn btn-primary" href="/pages/agregar-viandas.html">Agregar
+                            vianda</a>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <th>Comida</th>
+                        <th>Fecha de caducidad</th>
+                        <th>Heladera</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>Pure de papas</th>
+                            <th>23/10/24</th>
+                            <th>#23 Obelisco</th>
+                        </tr>
+                        <tr>
+                            <th>Pure de papas</th>
+                            <th>23/10/24</th>
+                            <th>#23 Obelisco</th>
+                        </tr>
+                        <tr>
+                            <th>Pure de papas</th>
+                            <th>23/10/24</th>
+                            <th>#23 Obelisco</th>
+                        </tr>
+                        <tr>
+                            <th>Pure de papas</th>
+                            <th>23/10/24</th>
+                            <th>#23 Obelisco</th>
+                        </tr>
+                        <tr>
+                            <th>Pure de papas</th>
+                            <th>23/10/24</th>
+                            <th>#23 Obelisco</th>
+                        </tr>
+                        <tr>
+                            <th>Pure de papas</th>
+                            <th>23/10/24</th>
+                            <th>#23 Obelisco</th>
+                        </tr>
+                        <tr>
+                            <th>Pure de papas</th>
+                            <th>23/10/24</th>
+                            <th>#23 Obelisco</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</main>
+<script src="/public/js/jquery.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+</body>
+
+</html>

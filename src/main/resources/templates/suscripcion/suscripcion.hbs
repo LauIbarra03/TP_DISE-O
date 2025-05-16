@@ -1,0 +1,28 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Suscripciones</h3>
+                <a href="/suscripcion/formulario_suscripcion" class="btn btn-primary">Agregar
+                    suscripcion</a>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <th>Heladera</th>
+                <th>Tipo de Suscripcion</th>
+                </thead>
+                <tbody>
+                {{#each suscripciones}}
+                    <tr onclick="window.location.href='/suscripcion/detalle_suscripcion/{{this.id}}'"
+                        style="cursor: pointer;">
+                        <th>{{this.heladera.id}}</th>
+                        <th>{{this.tipoSuscripcion.getTipo}}</th>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+{{/partial}}
+{{> templates/base}}

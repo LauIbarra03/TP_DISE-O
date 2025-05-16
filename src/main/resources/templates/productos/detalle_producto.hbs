@@ -1,0 +1,138 @@
+{{#partial "contenido"}}
+    <div class="container mt-4">
+        {{#if comprado}}
+
+        {{else}}
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Tus puntos disponibles:</strong> <span
+                            id="userPoints">{{puntos_colaborador}}</span>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{producto.imagenIlustrativa}}" class="img-fluid rounded"
+                     alt="{{producto.nombre}}">
+            </div>
+            <div class="col-md-6">
+                <h1 class="mb-3">{{producto.nombre}}</h1>
+                <p class="lead mb-4">Puntos requeridos:
+                    <strong>{{producto.cantidadDePuntos}}</strong></p>
+                <p><strong>Rubro:</strong> {{producto.rubro.rubro}}</p>
+                <p><strong>ID del producto:</strong> {{producto.id}}</p>
+                <p><strong>Fecha de alta:</strong> {{producto.fechaAlta}}</p>
+                {{#if comprado}}
+                    <a href="/productos" class="btn btn-secondary mt-3">Volver a la Lista</a>
+                {{else}}
+                    <div class="mt-4">
+                        <button class="btn btn-primary btn-lg"
+                                id="buyButton"
+                                data-id="{{producto.id}}"
+                                data-name="{{producto.nombre}}"
+                                data-points="{{producto.cantidadDePuntos}}"
+                                {{#if disabled}}disabled{{/if}}>
+
+                            {{#if disabled}}Puntos Insuficientes{{else}}Canjear por puntos{{/if}}
+                        </button>
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmar canje</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que quieres canjear <span id="productName"></span> por <span
+                        id="productPoints"></span> puntos?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primary" id="confirmPurchase">Confirmar
+                        canje
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const buyButton = document.getElementById('buyButton');
+            const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+            let currentProductId = null;
+
+            buyButton.addEventListener('click', function () {
+                const productId = this.getAttribute('data-id');
+                const productName = this.getAttribute('data-name');
+                const productPoints = this.getAttribute('data-points');
+
+                document.getElementById('productName').textContent = productName;
+                document.getElementById('productPoints').textContent = productPoints;
+                currentProductId = productId;
+
+                confirmModal.show();
+            });
+
+            document.getElementById('confirmPurchase').addEventListener('click', function () {
+                const requestBody = JSON.stringify({
+                    productoId: currentProductId
+                });
+
+                fetch(`/producto/${currentProductId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: requestBody
+                })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Mostrar mensaje de éxito
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '¡Éxito!',
+                                    text: data.message,
+                                    showConfirmButton: false,
+                                    timer: 2000 // Mostrar el mensaje durante 2 segundos
+                                }).then(() => {
+                                    // Redirigir al usuario después de que pase el tiempo
+                                    window.location.href = data.redirectUrl;
+                                });
+                            } else {
+                                // Mostrar mensaje de error
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: data.message || 'No se pudo realizar el canje.',
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            // Mostrar mensaje de error genérico
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Hubo un problema al procesar tu solicitud.',
+                            });
+                        });
+            });
+        });
+    </script>
+{{/partial}}
+{{> templates/base}}

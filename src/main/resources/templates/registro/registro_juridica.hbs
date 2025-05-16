@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>{{titulo}}</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-10">
+            <div class="card border rounded-2">
+                <div class="card-body p-0">
+                    <div class="row no-gutters">
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h3 class="h4 font-weight-bold text-theme">Registro de
+                                        Colaborador Juridico</h3>
+                                </div>
+
+                                <p class="text-muted text-center mt-2 mb-5">
+                                    Completa los datos para registrarte como colaborador en la
+                                    plataforma.
+                                </p>
+
+                                {{!-- <form method="POST" action="/registro_persona_juridica"
+                                    id="formulario_colaboradores"> --}}
+                                <form id="registro_persona_juridica">
+                                    <input type="hidden" name="id">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="usuario">Usuario</label>
+                                                <input type="text" class="form-control"
+                                                       id="usuario"
+                                                       name="usuario" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="password">Contraseña</label>
+                                                <input type="password" class="form-control"
+                                                       id="password"
+                                                       name="password" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="razon">Razón Social</label>
+                                                <input type="text" class="form-control" id="razon"
+                                                       name="razon"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="tipo_id">Tipo</label>
+                                                <select class="form-select" aria-label="tipo"
+                                                        name="tipo_id"
+                                                        required>
+                                                    <option value="" disabled selected>Seleccione
+                                                        un
+                                                        tipo de
+                                                        organización
+                                                    </option>
+                                                    {{#each tiposOrganizacion}}
+                                                        <option value="{{valor}}">
+                                                            {{valor}}
+                                                        </option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="rubro_id">Rubro</label>
+                                                <select class="form-select" aria-label="rubro_id"
+                                                        name="rubro_id" required>
+                                                    <option value="" disabled selected>Seleccione
+                                                        un
+                                                        rubro
+                                                    </option>
+                                                    {{#each rubros}}
+                                                        <option value="{{this.id}}">
+                                                            {{this.rubro}}
+                                                        </option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="Email">Email (Opcional)</label>
+                                                <input type="email" class="form-control" id="Email"
+                                                       name="email">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="Telefono">Teléfono (Opcional)</label>
+                                                <input type="text" class="form-control"
+                                                       id="Telefono"
+                                                       name="telefono">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="Whatsapp">Whatsapp (Opcional)</label>
+                                                <input type="text" class="form-control"
+                                                       id="Whatsapp"
+                                                       name="whatsapp">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="donar_frecuencia" class="form-label">¿Desea
+                                                    ingresar
+                                                    la dirección?</label>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="radio" id="direccion_si"
+                                                           name="ingresarDireccion" value="si">
+                                                    <label for="direccion_si"
+                                                           class="form-check-label">Sí</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="radio" id="direccion_no"
+                                                           name="ingresarDireccion" value="no"
+                                                           checked>
+                                                    <label for="direccion_no"
+                                                           class="form-check-label">No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="direccionFields" class="d-none">
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="calle">Calle</label>
+                                                    <input type="text" class="form-control"
+                                                           id="calle"
+                                                           name="calle">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="altura">Altura</label>
+                                                    <input type="string" class="form-control"
+                                                           id="altura"
+                                                           name="altura">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="localidad">Localidad</label>
+                                                    <input type="string" class="form-control"
+                                                           id="localidad"
+                                                           name="localidad">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="provincia">Provincia</label>
+                                                    <select class="form-select"
+                                                            aria-label="contribucion"
+                                                            name="provincia">
+                                                        <option value="" disabled selected>
+                                                            Seleccione una
+                                                            provincia
+                                                        </option>
+                                                        {{#each provincias}}
+                                                            <option value="{{this.nombre}}">
+                                                                {{this.nombre}}
+                                                            </option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style="position: relative;">
+                                            <div id="map-container"
+                                                 style="height: 50vh; width: 100%;"></div>
+                                            <div id="ubicacion_info"
+                                                 style="background-color: white; position:absolute; top: 10px; right: 10px; padding: 16px; border-radius: 5px; z-index: 999;">
+                                            </div>
+                                            <p>Corrobore la ubicación en el mapa antes de enviar el
+                                                formulario
+                                            </p>
+                                        </div>
+                                        <button type="button" class="btn btn-dark"
+                                                onclick="fetchUbicacion('registro_persona_juridica')">
+                                            Corroborar
+                                        </button>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <div class="form-group mb-3" id="contribuciones">
+                                                <label>¿Cómo desea contribuir?</label>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           name="contribuciones"
+                                                           id="RealizarOfertas"
+                                                           value="RealizarOfertas">
+                                                    <label class="form-check-label">Realizar
+                                                        Ofertas</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           name="contribuciones"
+                                                           id="HaceseCargoHeladera"
+                                                           value="HaceseCargoHeladera">
+                                                    <label class="form-check-label">Hacerse Cargo
+                                                        de
+                                                        una
+                                                        Heladera</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           name="contribuciones"
+                                                           id="DonacionDinero"
+                                                           value="DonacionDinero">
+                                                    <label class="form-check-label">Donación de
+                                                        Dinero</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" id="sendPersonaJuridica"
+                                            class="btn btn-primary btn-block"
+                                            onclick="handleFormPersonaJuridica('registro_persona_juridica')">
+                                        Registrarse
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Inicializar el mapa
+    let map = L.map('map-container').setView([-34.603722, -58.381592], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
+
+    // Mostrar los campos de dirección y recalcular el tamaño del mapa
+    document.getElementById('direccion_si').addEventListener('click', function () {
+        const direccionFields = document.getElementById('direccionFields');
+        direccionFields.classList.remove('d-none');
+        document.getElementById('sendPersonaJuridica').disabled = true;
+
+        // Asegúrate de que el mapa está visible antes de invalidar su tamaño
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 10); // Espera un ciclo para asegurarte de que el mapa es visible
+    });
+
+    // Ocultar los campos de dirección
+    document.getElementById('direccion_no').addEventListener('click', function () {
+        document.getElementById('direccionFields').classList.add('d-none');
+        document.getElementById('sendPersonaJuridica').disabled = false;
+    });
+
+
+    let ubicacion = null;
+
+    async function obtenerCoordenadas(direccion) {
+        const apiKey = "AIzaSyBWSEuIHch9iocb6VWOFh4amqcTgM0wxQs";
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(direccion)}&key=${apiKey}`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.status}`);
+            }
+            const data = await response.json();
+            if (data.status === "OK") {
+                const resultados = data.results[0];
+                const {lat, lng} = resultados.geometry.location;
+                return {
+                    coords: {lat, lng},
+                    street_number: resultados.address_components.find(component => component.types.includes('street_number'))?.long_name || null,
+                    address: resultados.address_components.find(component => component.types.includes('route'))?.long_name || null,
+                    postal_code: resultados.address_components.find(component => component.types.includes('postal_code'))?.long_name || null,
+                    locality: resultados.address_components.find(component => component.types.includes('sublocality_level_1') || component.types.includes('locality'))?.long_name || null,
+                    city: resultados.address_components.find(component => component.types.includes('locality'))?.long_name || null,
+                    province: resultados.address_components.find(component => component.types.includes('administrative_area_level_1'))?.long_name || null,
+                    country: resultados.address_components.find(component => component.types.includes('country'))?.long_name || null,
+                };
+
+            } else {
+                throw new Error(`No se pudo obtener coordenadas: ${data.status}`);
+            }
+        } catch (error) {
+            console.error("Error al obtener coordenadas:", error);
+            return null;
+        }
+    }
+
+    function fetchUbicacion(formId) {
+        const formulario = document.getElementById(formId);
+        const calle = formulario.calle.value;
+        const altura = formulario.altura.value;
+        const localidad = formulario.localidad.value;
+        const provincia = formulario.provincia.value;
+
+        const direccion = `${calle} ${altura} ${localidad} ${provincia}`;
+
+        obtenerCoordenadas(direccion).then((obj) => {
+            if (obj) {
+                console.log(obj);
+
+                //eliminamos el marcador anterior
+                map.eachLayer((layer) => {
+                    if (layer instanceof L.Marker) {
+                        map.removeLayer(layer);
+                    }
+                });
+
+                const {coords} = obj;
+                map.setView([coords.lat, coords.lng], 15);
+                L.marker([coords.lat, coords.lng]).addTo(map);
+                document.getElementById('sendPersonaJuridica').disabled = false;
+                const ubicacionInfo = document.getElementById('ubicacion_info');
+                ubicacionInfo.innerHTML = `
+                    <p>Dirección: ${obj.address || 'Desconocida'} ${obj.street_number || ''}</p>
+                    <p>Código Postal: ${obj.postal_code || 'Desconocido'}</p>
+                    <p>Ciudad: ${obj.city || 'Desconocida'}</p>
+                    <p>Localidad: ${obj.locality || 'Desconocida'}</p>
+                    <p>Provincia: ${obj.province}</p>
+                    <p>País: ${obj.country}</p>
+                `;
+                ubicacion = obj;
+
+            }
+        });
+    }
+
+
+    function handleFormPersonaJuridica(formId) {
+        const formulario = document.getElementById(formId);
+        let isValid = true;
+
+        const requiredFields = formulario.querySelectorAll('[required]');
+        requiredFields.forEach(field => field.setCustomValidity(''));
+
+        for (const field of requiredFields) {
+            if (!field.value) {
+                isValid = false; // Si hay algún campo requerido vacío
+                field.setCustomValidity('Este campo es requerido.'); // Mensaje personalizado
+                field.reportValidity(); // Mostrar mensaje de validación del navegador
+            }
+        }
+
+        if (!ubicacion && formulario.ingresarDireccion.value === 'si') {
+            isValid = false;
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Debe corroborar la ubicación en el mapa antes de enviar el formulario",
+            });
+        }
+
+        if (isValid) {
+            const formData = new FormData();
+            formData.append('usuario', formulario.usuario.value);
+            formData.append('password', formulario.password.value);
+            formData.append('razon', formulario.razon.value);
+            formData.append('tipo_id', formulario.tipo_id.value);
+            formData.append('rubro_id', formulario.rubro_id.value);
+            formData.append('email', formulario.email.value);
+            formData.append('telefono', formulario.telefono.value);
+            formData.append('whatsapp', formulario.whatsapp.value);
+            formData.append('ingresarDireccion', formulario.ingresarDireccion.value);
+
+            if (ubicacion) {
+                formData.append('calle', ubicacion.address);
+                formData.append('altura', ubicacion.street_number);
+                formData.append('ciudad', ubicacion.city);
+                formData.append('localidad', ubicacion.locality);
+                formData.append('provincia', formulario.provincia.value);
+                formData.append('codigoPostal', ubicacion.postal_code);
+                formData.append('latitud', ubicacion.coords.lat);
+                formData.append('longitud', ubicacion.coords.lng);
+
+            }
+
+            const contribuciones = document.querySelectorAll('[name="contribuciones"]:checked');
+            contribuciones.forEach(contribucion => {
+                formData.append('contribuciones', contribucion.value);
+            });
+
+            fetch('/registro_persona_juridica', {
+                method: 'POST',
+                body: formData
+            })
+                    .then(async response => {
+                        if (response.ok) {
+                            Swal.fire({
+                                icon: "success",
+                                text: "¡Gracias por registrarte!",
+                                showConfirmButton: false,
+                                timer: 1500,
+                            }).then(() => {
+                                window.location.href = '/panel';
+                            });
+                        } else {
+                            const errorData = await response.json();
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: errorData.error || "Hubo un error al procesar el registro. Intente nuevamente.",
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error al enviar el formulario:", error);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Hubo un error al procesar el registro. Intente nuevamente.",
+                        });
+                    });
+
+        }
+
+    }
+</script>
+</body>
+
+</html>

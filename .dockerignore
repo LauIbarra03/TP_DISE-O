@@ -1,0 +1,11 @@
+.git
+*.log
+*.md
+Thumbs.db
+mysql
+docs
+.github
+service_atencion_medica
+.gitignore
+diagrama-de-clases.mdj
+README.md

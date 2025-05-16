@@ -1,0 +1,44 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Heladeras</h3>
+                <div>
+                    <a href="/heladeras/mapa-heladeras" class="btn btn-primary">Ver mapa</a>
+                    {{#if user.esJuridica}}
+                        <a href="/colaboraciones/formulario/hacerse_cargo_heladera"
+                           class="btn btn-primary">Agregar
+                            heladera</a>
+                    {{else if user.isAdmin}}
+                        <a href="/colaboraciones/formulario/hacerse_cargo_heladera"
+                           class="btn btn-primary">Agregar
+                            heladera</a>
+                    {{else}}
+
+                    {{/if}}
+
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <th>Direccion</th>
+                <th>Fecha de alta</th>
+                <th>Capacidad</th>
+                </thead>
+                <tbody>
+                {{#each heladeras}}
+                    <tr onclick="window.location.href='/heladeras/detalle_heladera/{{this.id}}'"
+                        style="cursor: pointer;">
+                        <th>{{this.puntoGeografico.direccion.calle.nombre}} {{this.puntoGeografico.direccion.altura}}
+                            ,
+                            {{this.puntoGeografico.direccion.codigoPostal}}</th>
+                        <th>{{this.fechaDeInicio}}</th>
+                        <th>{{this.capacidadViandas}}</th>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

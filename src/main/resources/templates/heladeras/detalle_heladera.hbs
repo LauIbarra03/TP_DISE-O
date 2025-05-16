@@ -1,0 +1,91 @@
+{{#partial "contenido"}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <div class="container">
+        <h2 class="mb-4">Detalle de la Heladera</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 class="card-title">Heladera #<span
+                                id="heladera-id">{{heladera.id}}</span></h3>
+                        <p class="card-text"><strong>Capacidad de viandas:</strong> <span
+                                id="capacidad">{{heladera.capacidadViandas}}</span></p>
+                        <p class="card-text"><strong>Fecha de funcionamiento:</strong> <span
+                                id="fecha-funcionamiento">{{heladera.fechaDeInicio}}</span></p>
+                        <p class="card-text"><strong>Estado:</strong> <span id="estado"
+                                                                            class="badge bg-success">{{estado}}</span>
+                        </p>
+                        <p class="card-text"><strong>Incidente:</strong> <span
+                                id="incidente">{{mensajeIncidente}}</span></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="card-text"><strong>Temperatura máxima:</strong> <span
+                                id="temp-max">{{heladera.modelo.tempMaxima}}</span> °C</p>
+                        <p class="card-text"><strong>Temperatura mínima:</strong> <span
+                                id="temp-min">{{heladera.modelo.tempMinima}}</span> °C</p>
+                        <p class="card-text"><strong>Dirección:</strong> <span
+                                id="direccion">{{direccion.calle.nombre}}
+                            {{direccion.altura}}
+                            , {{direccion.codigoPostal}} {{ direccion.localidad.nombre }},
+                            {{direccion.provincia.nombre}} </span></p>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div id="map-container" style="height: 250px; width: 100%;"></div>
+                    </div>
+                </div>
+                <hr>
+                <div class="mt-4">
+                    <h4>Viandas Actuales</h4>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID Vianda</th>
+                            <th>Comida</th>
+                            <th>Fecha de Caducidad</th>
+                        </tr>
+                        </thead>
+                        <tbody id="viandas-list">
+                        {{#each viandas}}
+                            <tr>
+                                <td>{{this.id}}</td>
+                                <td>{{this.comida.nombre}}</td>
+                                <td>{{this.fechaCaducidad}}</td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4">
+                    {{#if permisoEdicion}}
+                        <a href="/heladeras/editar_heladera/{{heladera.id}}"
+                           class="btn btn-primary">Editar
+                            Información</a>
+                        <a href="/heladeras/eliminar_heladera/{{heladera.id}}"
+                           class="btn btn-danger">Eliminar
+                            Heladera</a>
+                    {{/if}}
+                    <a href="/heladeras" class="btn btn-secondary">Volver a la Lista</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{#partial "scripts"}}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script>
+        var latitud = {{latitud}};
+        var longitud = {{longitud}};
+        var mymap = L.map('map-container').setView([latitud, longitud], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(mymap);
+        L.marker([latitud, longitud]).addTo(mymap)
+                .bindPopup('Heladera #{{heladera.id}}')
+                .openPopup();
+    </script>
+{{/partial}}
+{{> templates/base}}

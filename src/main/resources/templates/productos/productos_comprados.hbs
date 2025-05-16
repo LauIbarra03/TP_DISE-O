@@ -1,0 +1,30 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Productos comprados</h3>
+                <div>
+                    <a href="/tienda" class="btn btn-primary">Ir a tienda</a>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <th>Nombre</th>
+                <th>Rubro</th>
+                <th>Precio</th>
+                </thead>
+                <tbody>
+                {{#each productos}}
+                    <tr onclick="window.location.href='/producto/{{this.id}}'"
+                        style="cursor: pointer;">
+                        <th>{{this.nombre}}</th>
+                        <th>{{this.rubro.rubro}}</th>
+                        <th>{{this.cantidadDePuntos}}</th>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

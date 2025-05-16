@@ -1,0 +1,155 @@
+{{#partial "contenido"}}
+    <div class="container">
+        <h2 class="mb-4">Perfil del Colaborador</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <img src="https://via.placeholder.com/150" alt="Foto del Colaborador"
+                             class="rounded-circle img-fluid mb-3">
+                        <h3 class="card-title">{{colaborador.nombre}} {{colaborador.apellido}} </h3>
+                        <p class="card-text text-muted">Voluntario Activo</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" type="button">Editar Perfil</button>
+                            <button class="btn btn-outline-secondary" type="button">Cambiar
+                                Contraseña
+                            </button>
+                            <a class="btn btn-outline-danger" type="button" href="/logout">Cerrar
+                                Sesión</a>
+                            <a href="#" class="btn btn-danger" type="button">Eliminar
+                                Colaborador</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Información Personal</h4>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p><strong>ID:</strong> {{colaborador.id}}</p>
+                                <p class="card-text"><strong>Email:</strong>
+                                    {{#if correo}}
+                                        {{this.correo.contacto}}
+                                    {{else}}
+                                        No disponible
+                                    {{/if}}
+                                </p>
+                                <p class="card-text"><strong>Teléfono:</strong>
+                                    {{#if telefono}}
+                                        {{this.telefono.contacto}}
+                                    {{else}}
+                                        No disponible
+                                    {{/if}}
+                                </p>
+                                <p><strong>WhatsApp:</strong>
+                                    {{#if whatsapp}}
+                                        {{this.whatsapp.contacto}}
+                                    {{else}}
+                                        No disponible
+                                    {{/if}}
+                                </p>
+                                <p><strong>Telegram:</strong>
+                                    {{#if telegram}}
+                                        {{this.telegram.contacto}}
+                                    {{else}}
+                                        No disponible
+                                    {{/if}}
+                                </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p><strong>Fecha de Inicio:</strong> {{colaborador.fechaAlta}}</p>
+                                <p><strong>Tipo persona:</strong>
+                                    {{colaborador.tipoPersona.nombre}}
+                                </p>
+                                <p><strong>Estado:</strong>
+                                    {{#if colaborador.activo}}
+                                        <span class="badge bg-success">
+                                        Activo
+                                        </span>
+                                    {{else }}
+                                        <span class="badge bg-danger">
+                                            Inactivo
+                                        </span>
+                                    {{/if}}
+                                </p>
+                                <p><strong>Rol:</strong>{{rolColaborador}}</p>
+                                <p><strong>Formas de contribuir:</strong></p>
+                                <ul>
+                                    {{#each formasContribuir}}
+                                        <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Estadísticas</h4>
+                        <div class="row">
+                            {{#if colaborador.esHumana}}
+                                <div class="col-sm-4 text-center">
+                                    <h5>{{totalDonacionesVianda}}</h5>
+                                    <p class="text-muted">Viandas Donadas</p>
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <h5>{{totalDonacionesDinero}}</h5>
+                                    <p class="text-muted">Total Dinero Donado</p>
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <h5>{{totalDistribucionesViandas}}</h5>
+                                    <p class="text-muted">Total viandas Distribuidas</p>
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <h5>{{totalPersonasVulnerables}}</h5>
+                                    <p class="text-muted">Total Vulnerables Registrado</p>
+                                </div>
+
+                            {{else}}
+                                <div class="col-sm-4 text-center">
+                                    <h5>{{totalDonacionesDinero}}</h5>
+                                    <p class="text-muted">Total Dinero Donado</p>
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <h5>{{totalCargoHeladera}}</h5>
+                                    <p class="text-muted">Heladeras a Cargo</p>
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <h5>{{totalOfertasRealizadas}}</h5>
+                                    <p class="text-muted">Total Productos/Ofertas</p>
+                                </div>
+                            {{/if}}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Historial de Colaboraciones</h4>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tipo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each contribuciones}}
+                                <tr>
+                                    <td>{{this.fechaHora}}</td>
+                                    <td>{{this.getTipo}}</td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{{/partial}}
+{{> templates/base}}

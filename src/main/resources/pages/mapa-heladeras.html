@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link crossorigin="anonymous"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link href="/public/css/panel.css" rel="stylesheet">
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/>
+    <title>Heladeras</title>
+</head>
+
+<body>
+<main class="d-flex">
+    <div class="d-flex flex-column flex-shrink-0 p-3 sidebar" style="width: 280px;">
+        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+           href="/">
+            <span class="fs-4">Compartir es cuidar ♥</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/pages/panel.html">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/colaboradores.html">
+                    Colaboradores
+                </a>
+            </li>
+            <li>
+                <a aria-current="page" class="nav-link active" href="/pages/heladeras.html">
+                    Heladeras
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/persona-vulnerable.html">
+                    Personas vulnerables
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-white" href="/pages/viandas.html">
+                    Viandas
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="dashboard">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary border bg-white">
+            <div class="btn-group dropstart mr-3">
+                <a aria-expanded="false"
+                   class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" href="#">
+                    <img alt="" class="rounded-circle me-2" height="32"
+                         src="https://github.com/rama054.png"
+                         width="32">
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="p-4">
+            <h3>Visualización de alertas</h3>
+            <div class="form-group mb-3">
+                <input class="form-control" id="nombre" placeholder="Buscar" type="text">
+            </div>
+            <div id="map-container" style="height: 80vh; width: 100%;"></div>
+        </div>
+    </div>
+</main>
+<script src="/public/js/jquery.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script crossorigin=""
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    let map = L.map('map-container').setView([-34.603722, -58.381592], 13);
+
+    let markets = [
+        {
+            "name": "Heladera Solidaria - UTN - FRBA",
+            "lat": -34.5977642,
+            "lng": -58.4197662
+        },
+        {
+            "name": "Heladera Solidaria - Plaza de Mayo",
+            "lat": -34.6083,
+            "lng": -58.3724
+        },
+        {
+            "name": "Heladera Solidaria - Plaza de la Republica",
+            "lat": -34.603722,
+            "lng": -58.381592
+        },
+        {
+            "name": "Heladera Solidaria - Paque Centenario",
+            "lat": -34.6082091,
+            "lng": -58.4355507
+        },
+        {
+            "name": "Heladera Solidaria - Plaza Italia",
+            "lat": -34.5813,
+            "lng": -58.4203
+
+        }
+    ]
+
+    markets.forEach(market => {
+        L.marker([market.lat, market.lng]).addTo(map)
+            .bindPopup(market.name)
+            .openPopup();
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
+
+</script>
+</body>
+
+</html>

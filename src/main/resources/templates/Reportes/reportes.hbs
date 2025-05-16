@@ -1,0 +1,31 @@
+{{#partial "contenido"}}
+    <div class="container mt-5">
+        <h1 class="mb-4">Reportes de la Semana</h1>
+
+        <form id="generarReportesForm" action="/reportes" method="post" class="mb-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-file-alt"></i> Generar Reportes
+            </button>
+        </form>
+
+        <div class="list-group">
+            <a href="/reportes/reporteFallasHeladera.pdf"
+               class="list-group-item list-group-item-action">
+                <i class="fas fa-exclamation-triangle"></i> Cantidad de Fallas por Heladera
+            </a>
+            <a href="/reportes/reporteViandasDonadas.pdf"
+               class="list-group-item list-group-item-action">
+                <i class="fas fa-box"></i> Cantidad de Viandas Retiradas/Colocadas por Heladera
+            </a>
+            <a href="/reportes/reporteViandasHeladera.pdf"
+               class="list-group-item list-group-item-action">
+                <i class="fas fa-hand-holding-heart"></i> Cantidad de Viandas Donadas por
+                Colaborador
+            </a>
+        </div>
+    </div>
+    {{#partial "scripts"}}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{/partial}}
+{{/partial}}
+{{> templates/base}}

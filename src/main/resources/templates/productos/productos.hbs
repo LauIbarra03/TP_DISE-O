@@ -1,0 +1,36 @@
+{{#partial "contenido"}}
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col">
+                <div class="alert alert-info" role="alert">
+                    <strong>Tus puntos disponibles:</strong> <span
+                        id="userPoints">{{puntos_colaborador}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {{#each productos}}
+                <div class="col">
+                    <div class="card h-100">
+                        <a href="/producto/{{this.id}}" class="text-decoration-none">
+                            <img src="{{this.imagenIlustrativa}}" class="card-img-top"
+                                 alt="{{this.nombre}}">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{this.nombre}}</h5>
+                            <p class="card-text">Precio: {{this.cantidadDePuntos}} puntos</p>
+                            <a href="/producto/{{this.id}}" class="text-decoration-none">
+                                <button class="btn btn-primary buy-btn" data-id="{{this.id}}"
+                                        data-name="{{this.nombre}}"
+                                        data-points="{{this.cantidadDePuntos}}">Ir a Detalle
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base }}

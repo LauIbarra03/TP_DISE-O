@@ -1,0 +1,31 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Incidentes</h3>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <th>Heladera</th>
+                <th>Tipo</th>
+                </thead>
+                <tbody>
+                {{#each incidentes}}
+                    <tr onclick="window.location.href='/incidentes/{{this.id}}'"
+                        style="cursor: pointer;">
+                        <th>{{this.heladera.id}}</th>
+                        <th>
+                            {{#if this.tipoAlerta}}
+                                Alerta
+                            {{else}}
+                                Falla Técnica
+                            {{/if}}
+                        </th>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

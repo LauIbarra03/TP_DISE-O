@@ -1,0 +1,25 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Visitas Tecnicas</h3>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <th>Heladera</th>
+                <th>Fecha</th>
+                </thead>
+                <tbody>
+                {{#each visitas}}
+                    <tr onclick="window.location.href='/visitasTecnicas/{{this.id}}'"
+                        style="cursor: pointer;">
+                        <th>{{this.incidente.heladera.id}}</th>
+                        <th>{{this.fecha}}</th>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

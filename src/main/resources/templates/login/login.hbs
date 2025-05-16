@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{titulo}} - Compartir es Cuidar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+          rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .login-img {
+            background-size: cover;
+            background-position: center;
+            min-height: 400px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .text-theme {
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-10">
+            <div class="card login-card">
+                <div class="row g-0">
+                    <div class="col-lg-6">
+                        <div class="p-5">
+                            <div class="mb-3">
+                                <h2 class="h3 text-theme fw-bold">Iniciar Sesión</h2>
+                                <p class="text-muted h5 fw-bold">Bienvenido a Compartir es
+                                    Cuidar</p>
+                            </div>
+
+                            <form method="POST" action="/login">
+                                <div class="mb-3">
+                                    <label for="usuario" class="form-label">Usuario</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                        <input type="text" class="form-control" id="usuario"
+                                               name="usuario" required>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="password" class="form-label">Contraseña</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i
+                                                class="bi bi-lock"></i></span>
+                                        <input type="password" class="form-control" id="password"
+                                               name="password"
+                                               required>
+                                    </div>
+                                </div>
+                                {{#if error}}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{error}}
+                                    </div>
+                                {{/if}}
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">Iniciar
+                                        Sesión
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="mt-4 text-center">
+                                <p>¿No tienes una cuenta? <a href="/" class="text-theme">Regístrate
+                                    aquí</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 d-none d-lg-block">
+                        <div class="login-img h-100"
+                             style="background-image: url(/images/bg-1.jpg);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

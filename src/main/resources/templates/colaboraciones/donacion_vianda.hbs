@@ -1,0 +1,75 @@
+{{#partial "formulario"}}
+    <div id="form5" class="formulario">
+        <h4>Donación de vianda</h4>
+        <form method="POST" action="/colaboraciones/formulario/donacion_vianda" id="miFormulario">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="comida">Comida</label>
+                        <input type="text" class="form-control" id="comida" name="comida" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fecha_cad">Fecha de caducidad</label>
+                        <input type="date" class="form-control" id="fecha_cad" name="fecha_cad"
+                               required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group mb-3">
+                        <label for="heladera_id">Heladera</label>
+                        <select class="form-select" aria-label="heladera" name="heladera_id"
+                                required>
+                            <option value="" disabled selected>Seleccione una heladera</option>
+                            {{#each heladeras}}
+                                <option value="{{this.id}}">
+                                    {{this.puntoGeografico.direccion.calle.nombre}} {{this.puntoGeografico.direccion.altura}}
+                                    ,
+                                    {{this.puntoGeografico.direccion.codigoPostal}}
+                                    , {{this.puntoGeografico.direccion.ciudad.nombre}}
+                                </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="calorias">Calorias</label>
+                        <input type="number" class="form-control" id="calorias" name="calorias"
+                               required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Peso">Peso</label>
+                        <input type="number" class="form-control" id="Peso" name="peso" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Fecha de donacion">Fecha de donacion</label>
+                        <input type="date" class="form-control" id="Fecha de donacion"
+                               name="fecha_don" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="entregado"
+                           name="entregado"
+                           checked>
+                    <label class="form-check-label" for="entregado">Entregado</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark" id="boton_carga_formulario"
+                    onclick="initializeFormHandler('miFormulario')">Enviar
+            </button>
+        </form>
+    </div>
+{{/partial}}
+{{> templates/colaboraciones/colaboraciones}}

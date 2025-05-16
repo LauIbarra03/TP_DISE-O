@@ -1,0 +1,36 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Formulario de Solicitud de Apertura</h3>
+            </div>
+            <div>
+                <form method="POST" action="/solicitudApertura/formulario_solicitudApertura"
+                      id="formSolicitudApertura"
+                      enctype="multipart/form-data"
+                      data-url="/solicitudApertura/formulario_solicitudApertura">
+
+                    <div class="form-group mb-3">
+                        <label for="heladera_id">Seleccione la heladera a la que se le quiere
+                            solicitar la apertura</label>
+                        <select class="form-select" id="heladera_id"
+                                aria-label="heladera"
+                                name="heladera_id" required>
+                            <option value="" disabled selected>Seleccione una heladera</option>
+                            {{#each heladeras}}
+                                <option value="{{this.id}}">#{{this.id}}
+                                    : {{this.puntoGeografico.direccion.show}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="boton_carga_visita"
+                            onclick="initializeFormHandler('formSolicitudApertura')">Registrar
+                        Solicitud
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

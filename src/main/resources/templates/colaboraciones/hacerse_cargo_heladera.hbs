@@ -1,0 +1,309 @@
+{{#partial "formulario"}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <div id="form5" class="formulario">
+        <h4>Hacerse cargo heladera</h4>
+        <form id="miFormulario">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="capacidad_viandas">Capacidad de viandas</label>
+                        <input type="number" class="form-control" id="capacidad_viandas"
+                               name="capacidad_viandas" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fecha_funcionamiento">Fecha funcionamiento</label>
+                        <input type="date" class="form-control" id="fecha_funcionamiento"
+                               name="fecha_funcionamiento"
+                               required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="nombre">Estado heladera</label>
+                        <select class="form-select" aria-label="contribucion"
+                                name="estado_heladera" required>
+                            <option value="" disabled selected>Seleccione un estado</option>
+                            {{#each estadosHeladera}}
+                                <option value="{{valor}}">{{valor}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="modelo">Modelo</label>
+                        <select class="form-select" aria-label="modelo" id="modelo" name="modelo"
+                                required>
+                            <option value="" selected disabled>Seleccione un modelo</option>
+                            {{#each modelos}}
+                                <option value="{{this.id}}">
+                                    {{this.nombre}}
+                                </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="calle">Calle</label>
+                        <input type="text" class="form-control" id="calle" name="calle" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="altura">Altura</label>
+                        <input type="string" class="form-control" id="altura" name="altura"
+                               required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="provincia">Provincia</label>
+                        <select class="form-select" aria-label="contribucion" id="provincia"
+                                name="provincia"
+                                onchange="cargarLocalidades()" required>
+                            <option value="" selected disabled>Seleccione una provincia</option>
+                            {{#each provincias}}
+                                <option value="{{this.nombre}}">
+                                    {{this.nombre}}
+                                </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="localidad">Localidad</label>
+                        <select class="form-select" id="localidad" name="localidad" disabled>
+                            <option value="" selected disabled>Seleccione una localidad</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div style="position: relative;">
+                <div id="map-container" style="height: 50vh; width: 100%;"></div>
+                <div id="ubicacion_info"
+                     style="background-color: white; position:absolute; top: 10px; right: 10px; padding: 16px; border-radius: 5px; z-index: 999;">
+                </div>
+                <p>Corrobore la ubicación en el mapa antes de enviar el formulario</p>
+            </div>
+            <button type="button" class="btn btn-dark" onclick="fetchUbicacion('miFormulario')">
+                Corroborar
+            </button>
+            <button id="sendFormHeladera" type="button" disabled class="btn btn-success"
+                    onclick="handleFormHeladera('miFormulario')">Enviar
+            </button>
+        </form>
+
+    </div>
+
+{{/partial}}
+{{#partial "scripts"}}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+
+
+    <script>
+        async function cargarLocalidades() {
+            const provinciaSeleccionada = document.getElementById("provincia").value;
+            const localidadSelect = document.getElementById("localidad");
+
+            if (!provinciaSeleccionada) return;
+
+            // Vaciar el selector de localidades
+            localidadSelect.innerHTML = '<option value="" selected disabled>Seleccione una localidad</option>';
+            localidadSelect.disabled = true;
+
+            fetch(`/api/localidades/${encodeURIComponent(provinciaSeleccionada)}`)
+                    .then(response => response.json())
+                    .then(localidades => {
+                        localidades.forEach(localidad => {
+                            const option = document.createElement('option');
+                            option.value = localidad;
+                            option.textContent = localidad;
+                            localidadSelect.appendChild(option);
+                        });
+                        localidadSelect.disabled = false;
+                    })
+                    .catch(error => {
+                        console.error('Error al cargar las localidades:', error);
+                    });
+        }
+    </script>
+
+    <script>
+        let map = L.map('map-container').setView([-34.603722, -58.381592], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        let ubicacion = null;
+
+        async function obtenerCoordenadas(direccion) {
+            const apiKey = "AIzaSyBWSEuIHch9iocb6VWOFh4amqcTgM0wxQs";
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(direccion)}&key=${apiKey}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error en la solicitud: ${response.status}`);
+                }
+                const data = await response.json();
+                if (data.status === "OK") {
+                    const resultados = data.results[0];
+                    const {lat, lng} = resultados.geometry.location;
+                    return {
+                        coords: {lat, lng},
+                        street_number: resultados.address_components.find(component => component.types.includes('street_number'))?.long_name || null,
+                        address: resultados.address_components.find(component => component.types.includes('route'))?.long_name || null,
+                        postal_code: resultados.address_components.find(component => component.types.includes('postal_code'))?.long_name || null,
+                        locality: resultados.address_components.find(component => component.types.includes('sublocality_level_1') || component.types.includes('locality'))?.long_name || null,
+                        city: resultados.address_components.find(component => component.types.includes('locality'))?.long_name || null,
+                        province: resultados.address_components.find(component => component.types.includes('administrative_area_level_1'))?.long_name || null,
+                        country: resultados.address_components.find(component => component.types.includes('country'))?.long_name || null,
+                    };
+
+                } else {
+                    throw new Error(`No se pudo obtener coordenadas: ${data.status}`);
+                }
+            } catch (error) {
+                console.error("Error al obtener coordenadas:", error);
+                return null;
+            }
+        }
+
+        function fetchUbicacion(formId) {
+            const formulario = document.getElementById(formId);
+            const calle = formulario.calle.value;
+            const altura = formulario.altura.value;
+            const localidad = formulario.localidad.value;
+            const provincia = formulario.provincia.value;
+
+            const direccion = `${calle} ${altura} ${localidad} ${provincia}`;
+
+            obtenerCoordenadas(direccion).then((obj) => {
+                if (obj) {
+                    console.log(obj);
+
+                    //eliminamos el marcador anterior
+                    map.eachLayer((layer) => {
+                        if (layer instanceof L.Marker) {
+                            map.removeLayer(layer);
+                        }
+                    });
+
+                    const {coords} = obj;
+                    map.setView([coords.lat, coords.lng], 15);
+                    L.marker([coords.lat, coords.lng]).addTo(map);
+                    document.getElementById('sendFormHeladera').disabled = false;
+                    const ubicacionInfo = document.getElementById('ubicacion_info');
+                    ubicacionInfo.innerHTML = `
+                    <p>Dirección: ${obj.address || 'Desconocida'} ${obj.street_number || ''}</p>
+                    <p>Código Postal: ${obj.postal_code || 'Desconocido'}</p>
+                    <p>Ciudad: ${obj.city || 'Desconocida'}</p>
+                    <p>Localidad: ${obj.locality || 'Desconocida'}</p>
+                    <p>Provincia: ${obj.province}</p>
+                    <p>País: ${obj.country}</p>
+                `;
+                    ubicacion = obj;
+                    if (
+                            ubicacion.address == null ||
+                            ubicacion.street_number == null ||
+                            ubicacion.city == null ||
+                            ubicacion.locality == null ||
+                            ubicacion.postal_code == null ||
+                            ubicacion.coords.lat == null ||
+                            ubicacion.coords.lng == null
+                    ) ubicacion = null
+                }
+            });
+
+
+        }
+
+        function handleFormHeladera(formId) {
+            const formulario = document.getElementById(formId);
+
+            let isValid = true;
+
+            const requiredFields = formulario.querySelectorAll('[required]');
+            requiredFields.forEach(field => field.setCustomValidity(''));
+
+            for (const field of requiredFields) {
+                if (!field.value) {
+                    isValid = false; // Si hay algún campo requerido vacío
+                    field.setCustomValidity('Este campo es requerido.'); // Mensaje personalizado
+                    field.reportValidity(); // Mostrar mensaje de validación del navegador
+                }
+            }
+
+            if (!ubicacion) {
+                isValid = false;
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Debe corroborar la ubicación en el mapa antes de enviar el formulario",
+                });
+            }
+
+            if (isValid) {
+                const formData = new FormData();
+                formData.append('capacidad_viandas', formulario.capacidad_viandas.value);
+                formData.append('fecha_funcionamiento', formulario.fecha_funcionamiento.value);
+                formData.append('estado_heladera', formulario.estado_heladera.value);
+                formData.append('modelo', formulario.modelo.value);
+                formData.append('provincia', formulario.provincia.value);
+
+                formData.append('calle', ubicacion.address);
+                formData.append('altura', ubicacion.street_number);
+                formData.append('ciudad', ubicacion.city);
+                formData.append('localidad', ubicacion.locality);
+                formData.append('codigoPostal', ubicacion.postal_code);
+                formData.append('latitud', ubicacion.coords.lat);
+                formData.append('longitud', ubicacion.coords.lng);
+
+                fetch('/colaboraciones/formulario/hacerse_cargo_heladera', {
+                    method: 'POST',
+                    body: formData,
+                }).then(response => {
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Formulario enviado",
+                            text: "Gracias por colaborar",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            window.location.href = "/heladeras";
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al enviar el formulario",
+                        });
+                    }
+                }).catch(error => {
+                    console.error("Error al enviar el formulario:", error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Ocurrió un error al enviar el formulario",
+                    });
+                });
+            }
+
+        }
+
+    </script>
+{{/partial}}
+{{> templates/colaboraciones/colaboraciones}}

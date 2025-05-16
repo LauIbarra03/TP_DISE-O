@@ -1,0 +1,133 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Colaboradores</h3>
+                <div>
+                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                            data-bs-target="#modal-csv">
+                        Cargar CSV
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mensaje de éxito o error -->
+            {{#if mensaje}}
+                <div class="alert alert-info mt-3">
+                    {{mensaje}}
+                </div>
+            {{/if}}
+
+            <!-- Tabla de colaboradores -->
+            <table class="table table-striped">
+                <thead>
+                <th>Tipo de persona</th>
+                <th>Nombre y apellido</th>
+                <th>Medio de Contacto</th>
+                </thead>
+                <tbody>
+                {{#each colaboradores}}
+                    <tr onclick="window.location.href='/colaboradores/detalle_colaborador/{{this.id}}'"
+                        style="cursor: pointer;">
+                        <th>{{this.tipoPersona.nombre}}</th>
+                        <th>
+                            {{#if this.nombre}}
+                                {{this.nombre}} {{this.apellido}}
+                            {{else}}
+                                {{this.razonSocial}}
+                            {{/if}}
+                        </th>
+                        <th>
+                            {{#if this.contactos.[0]}}
+                                {{this.contactos.[0].contacto}}
+                            {{else if this.email}}
+                                {{this.email}}
+                            {{else}}
+                                Sin contacto
+                            {{/if}}
+                        </th>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal para cargar CSV -->
+    <div class="modal fade" id="modal-csv" tabindex="-1" aria-labelledby="cargar-csv"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="cargar-csv">Cargar archivo CSV</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <form id="csv-form">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">CSV</label>
+                            <input class="form-control" type="file" name="archivo" id="formFile"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button type="button" id="submitCSV" class="btn btn-primary">Subir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{{/partial}}
+{{#partial "scripts"}}
+
+    <script>
+        // Al hacer submit, mostrar un mensaje de carga
+        const form = document.getElementById('csv-form');
+        document.getElementById('submitCSV').addEventListener('click', event => {
+            const form = document.getElementById('csv-form');
+            const submitButton = document.getElementById('submitCSV');
+
+            // Desactivar el botón de enviar y mostrar un spinner
+            submitButton.disabled = true;
+            submitButton.innerHTML = `
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Subiendo...
+            `;
+
+            fetch('/subir-csv', {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    enctype: 'multipart/form-data'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    // Cerrar el modal
+                    const modal = new bootstrap.Modal(document.getElementById('modal-csv'));
+                    modal.hide();
+
+                    // Redirigir a la página de colaboradores
+                    window.location.href = '/colaboradores';
+                } else {
+                    response.text().then(text => {
+                        alert(text); // Mostrar el error si algo sale mal
+                    });
+                }
+            }).catch(err => {
+                alert('Error al cargar el archivo: ' + err);
+            }).finally(() => {
+                // Restaurar el botón de enviar (en caso de error)
+                submitButton.disabled = false;
+                submitButton.innerHTML = 'Subir';
+            });
+        });
+
+    </script>
+
+{{/partial}}
+{{> templates/base}}

@@ -1,0 +1,47 @@
+{{#partial "contenido"}}
+    <div class="container">
+        <h2 class="mb-4">Detalle de Incidente</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="card-title">Heladera #<span
+                                id="heladera-id">{{incidente.heladera.id}}</span></h3>
+                        <p class="card-text"><strong>Tipo de incidente:</strong> <span
+                                id="tipoIncidente">{{#if
+                                incidente.tipoAlerta}} {{tipoAlerta}} {{else}}
+                            Falla Técnica  {{/if}}</span></p>
+                        <p class="card-text"><strong>Fecha:</strong> <span
+                                id="fecha">{{incidente.fechaYHora}}</span>
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <div class="mt-4">
+                    <h4>Descripción</h4>
+                    {{#if incidente.descripcion}}
+                        <span id="temp-max">{{incidente.descripcion}}</span>
+                    {{else}}
+                        <span id="temp-max">No hay descripcion disponible para este incidente.</span>
+                    {{/if}}
+                </div>
+                <div class="mt-4">
+                    <h4>Foto</h4>
+                    {{#if incidente.foto}}
+                        <div class="text-center">
+                            <img src="{{incidente.foto}}" alt="Foto del incidente"
+                                 class="img-fluid rounded"
+                                 style="max-width: 100%; height: auto;">
+                        </div>
+                    {{else}}
+                        <p class="text-muted">No hay foto disponible para este incidente.</p>
+                    {{/if}}
+                </div>
+                <div class="mt-4">
+                    <a href="/incidentes" class="btn btn-secondary">Volver a la Lista</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

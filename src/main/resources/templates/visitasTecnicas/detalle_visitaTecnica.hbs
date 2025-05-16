@@ -1,0 +1,51 @@
+{{#partial "contenido"}}
+    <div class="container">
+        <h2 class="mb-4">Detalle de Visita Tecnica</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="card-title">Incidente #<span
+                                id="incidente-id">{{visita.incidente.id}}</span></h3>
+                        <p class="card-text"><strong>Tipo de incidente:</strong> <span
+                                id="tipoIncidente">{{#if
+                                visita.incidente.tipoAlerta}} {{tipoAlerta}} {{else}}
+                            Falla Tecnica {{/if}}</span></p>
+                        <p class="card-text"><strong>Fecha:</strong> <span
+                                id="fecha">{{visita.fecha}}</span></p>
+                        <p class="card-text"><strong>Tecnico:</strong> <span
+                                id="tecnico">{{visita.tecnico.nombre}} {{visita.tecnico.apellido}}</span>
+                        </p>
+                        <p class="card-text"><strong>Solucionado:</strong> <span id="tecnico">{{#if
+                                visita.incidenteSolucionado}} Sí {{else}} No {{/if}}</span></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="mt-4">
+                    <h4>Descripción</h4>
+                    {{#if visita.descripcion}}
+                        <span id="temp-max">{{visita.descripcion}}</span>
+                    {{else}}
+                        <span id="temp-max">No hay descripcion disponible para esta visita.</span>
+                    {{/if}}
+                </div>
+                <div class="mt-4">
+                    <h4>Foto</h4>
+                    {{#if visita.foto}}
+                        <div class="text-center">
+                            <img src="{{visita.foto}}" alt="Foto de la visita"
+                                 class="img-fluid rounded"
+                                 style="max-width: 100%; height: auto;">
+                        </div>
+                    {{else}}
+                        <p class="text-muted">No hay foto disponible para esta visita.</p>
+                    {{/if}}
+                </div>
+                <div class="mt-4">
+                    <a href="/visitasTecnicas" class="btn btn-secondary">Volver a la Lista</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

@@ -1,0 +1,51 @@
+{{#partial "formulario"}}
+    <div id="form5" class="formulario">
+        <h4>Realizar oferta/agregar producto</h4>
+        <form method="POST" action="/colaboraciones/formulario/realizar_oferta"
+              enctype="multipart/form-data"
+              id="miFormulario">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="canje_nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="canje_nombre" min="1"
+                               name="canje_nombre" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="rubro" class="form-label">Rubro</label>
+                        <select class="form-select" id="rubro" name="rubro" required>
+                            <option value="" selected disabled>Seleccione un rubro</option>
+                            {{#each rubros}}
+                                <option value="{{this.id}}">{{this.rubro}}</option>
+                            {{/each}}
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="canje_puntos" class="form-label">Puntos necesarios</label>
+                        <input type="number" class="form-control" id="canje_puntos"
+                               name="canje_puntos" min="1"
+                               required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col" id="falla_tecnica_foto">
+                    <div class="form-group">
+                        <label for="canje_foto" class="form-label">Foto del producto</label>
+                        <input class="form-control" type="file" id="canje_foto" name="canje_foto"
+                               required>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark"
+                    onclick="initializeFormHandler('miFormulario')">Enviar
+            </button>
+        </form>
+    </div>
+{{/partial}}
+{{> templates/colaboraciones/colaboraciones}}

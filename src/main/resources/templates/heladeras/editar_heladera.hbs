@@ -1,0 +1,329 @@
+{{#partial "contenido"}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Formulario de heladeras</h3>
+            </div>
+            <div>
+                <form id="miFormulario">
+                    <input type="hidden" name="id" value="{{heladera.id}}">
+                    <input type="hidden" name="modelo" value="{{heladera.modelo.id}}">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="capacidad_viandas">Capacidad de viandas</label>
+                                <input type="number" class="form-control" id="capacidad_viandas"
+                                       name="capacidad_viandas"
+                                       value="{{heladera.capacidadViandas}}" required>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="fecha_funcionamiento">Fecha funcionamiento</label>
+                                <input type="date" class="form-control" id="fecha_funcionamiento"
+                                       name="fecha_funcionamiento"
+                                       value="{{heladera.fechaDeInicio}}" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="nombre">Estado heladera</label>
+                                <select class="form-select" aria-label="contribucion"
+                                        name="estado_heladera"
+                                        value="{{estado}}" required>
+                                    <option value="" disabled>Seleccione un estado</option>
+                                    {{#each estadosHeladera}}
+                                        <option value="{{valor}}">{{valor}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="temp_max">Temperatura máxima (en °C)</label>
+                                <input type="number" class="form-control" id="temp_max"
+                                       name="temp_max"
+                                       value="{{heladera.modelo.tempMaxima}}" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="temp_min">Temperatura mínima (en °C)</label>
+                                <input type="number" class="form-control" id="temp_min"
+                                       name="temp_min"
+                                       value="{{heladera.modelo.tempMinima}}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="direccion_id"
+                           value="{{heladera.puntoGeografico.direccion.id}}">
+                    <input type="hidden" name="puntoGeografico_id"
+                           value="{{heladera.puntoGeografico.id}}">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="calle">Calle</label>
+                                <input type="text" class="form-control" id="calle" name="calle"
+                                       value="{{heladera.puntoGeografico.direccion.calle.nombre}}"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="altura">Altura</label>
+                                <input type="string" class="form-control" id="altura" name="altura"
+                                       value="{{heladera.puntoGeografico.direccion.altura}}"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="localidad">Localidad</label>
+                                <input type="string" class="form-control" id="localidad"
+                                       name="localidad"
+                                       value="{{heladera.puntoGeografico.direccion.localidad.nombre}}"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="provincia">Provincia</label>
+                                <select id="provincia" class="form-select"
+                                        aria-label="contribucion"
+                                        name="provincia"
+                                        required
+                                        value="{{heladera.puntoGeografico.direccion.provincia.nombre}}">
+                                    <option value="" disabled>Seleccione una provincia</option>
+                                    {{#each provincias}}
+                                        <option value="{{this.nombre}}">
+                                            {{this.nombre}}
+                                        </option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="position: relative;">
+                        <div id="map-container" style="height: 50vh; width: 100%;"></div>
+                        <div id="ubicacion_info"
+                             style="background-color: white; position:absolute; top: 10px; right: 10px; padding: 16px; border-radius: 5px; z-index: 999;">
+                            <p>Dirección: {{direccion.calle.nombre}} {{direccion.altura}}</p>
+                            <p>Código Postal: {{direccion.codigoPostal}}</p>
+                            <p>Localidad: {{direccion.localidad.nombre}}</p>
+                            <p>Ciudad: {{direccion.localidad.nombre}}</p>
+                            <p>Provincia: {{direccion.provincia.nombre}}</p>
+                        </div>
+                        <p>Corrobore la ubicación en el mapa antes de enviar el formulario</p>
+                    </div>
+                    <button id="corroborarButton" type="button" class="btn btn-dark d-none"
+                            onclick="fetchUbicacion('miFormulario')">Corroborar
+                    </button>
+                    <button id="sendFormHeladera" type="button" class="btn btn-success"
+                            onclick="handleFormHeladera('miFormulario')">Editar
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+{{/partial}}
+{{#partial "scripts"}}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script>
+        var latitud = {{ latitud }};
+        var longitud = {{ longitud }};
+
+        var map = L.map('map-container').setView([latitud, longitud], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 30,
+        }).addTo(map);
+        L.marker([latitud, longitud]).addTo(map)
+
+        let ubicacion = {
+            coords: {
+                lat: latitud,
+                lng: longitud
+            },
+            street_number: "{{direccion.altura}}",
+            address: "{{direccion.calle.nombre}}",
+            postal_code: "{{direccion.codigoPostal}}",
+            locality: "{{direccion.localidad.nombre}}",
+            city: "{{direccion.localidad.nombre}}",
+            province: "{{direccion.provincia.nombre}}",
+            country: "{{direccion.provincia.pais.nombre}}"
+        }
+
+
+        const calleInput = document.getElementById('calle');
+        const alturaInput = document.getElementById('altura');
+        const localidadInput = document.getElementById('localidad');
+        const provinciaInput = document.getElementById('provincia');
+        const sendFormHeladera = document.getElementById('sendFormHeladera');
+
+        function deshabilitarBoton() {
+            sendFormHeladera.disabled = true;
+            document.getElementById('corroborarButton').classList.remove('d-none')
+        }
+
+        calleInput.addEventListener('change', deshabilitarBoton);
+        alturaInput.addEventListener('change', deshabilitarBoton);
+        localidadInput.addEventListener('change', deshabilitarBoton);
+        provinciaInput.addEventListener('change', deshabilitarBoton);
+
+
+        async function obtenerCoordenadas(direccion) {
+            const apiKey = "AIzaSyBWSEuIHch9iocb6VWOFh4amqcTgM0wxQs";
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(direccion)}&key=${apiKey}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error en la solicitud: ${response.status}`);
+                }
+                const data = await response.json();
+                if (data.status === "OK") {
+                    const resultados = data.results[0];
+                    const {lat, lng} = resultados.geometry.location;
+                    return {
+                        coords: {lat, lng},
+                        street_number: resultados.address_components.find(component => component.types.includes('street_number'))?.long_name || null,
+                        address: resultados.address_components.find(component => component.types.includes('route'))?.long_name || null,
+                        postal_code: resultados.address_components.find(component => component.types.includes('postal_code'))?.long_name || null,
+                        locality: resultados.address_components.find(component => component.types.includes('sublocality_level_1') || component.types.includes('locality'))?.long_name || null,
+                        city: resultados.address_components.find(component => component.types.includes('locality'))?.long_name || null,
+                        province: resultados.address_components.find(component => component.types.includes('administrative_area_level_1'))?.long_name || null,
+                        country: resultados.address_components.find(component => component.types.includes('country'))?.long_name || null,
+                    };
+
+                } else {
+                    throw new Error(`No se pudo obtener coordenadas: ${data.status}`);
+                }
+            } catch (error) {
+                console.error("Error al obtener coordenadas:", error);
+                return null;
+            }
+        }
+
+        function fetchUbicacion(formId) {
+            const formulario = document.getElementById(formId);
+            const calle = formulario.calle.value;
+            const altura = formulario.altura.value;
+            const localidad = formulario.localidad.value;
+            const provincia = formulario.provincia.value;
+
+            const direccion = `${calle} ${altura} ${localidad} ${provincia}`;
+
+            obtenerCoordenadas(direccion).then((obj) => {
+                if (obj) {
+                    console.log(obj);
+
+                    //eliminamos el marcador anterior
+                    map.eachLayer((layer) => {
+                        if (layer instanceof L.Marker) {
+                            map.removeLayer(layer);
+                        }
+                    });
+
+                    const {coords} = obj;
+                    map.setView([coords.lat, coords.lng], 15);
+                    L.marker([coords.lat, coords.lng]).addTo(map);
+                    document.getElementById('sendFormHeladera').disabled = false;
+                    const ubicacionInfo = document.getElementById('ubicacion_info');
+                    ubicacionInfo.innerHTML = `
+                    <p>Dirección: ${obj.address || 'Desconocida'} ${obj.street_number || ''}</p>
+                    <p>Código Postal: ${obj.postal_code || 'Desconocido'}</p>
+                    <p>Ciudad: ${obj.city || 'Desconocida'}</p>
+                    <p>Localidad: ${obj.locality || 'Desconocida'}</p>
+                    <p>Provincia: ${obj.province}</p>
+                    <p>País: ${obj.country}</p>
+                `;
+                    ubicacion = obj;
+
+                }
+            });
+
+
+        }
+
+        function handleFormHeladera(formId) {
+            const formulario = document.getElementById(formId);
+
+            let isValid = true;
+
+            const requiredFields = formulario.querySelectorAll('[required]');
+            requiredFields.forEach(field => field.setCustomValidity(''));
+
+            for (const field of requiredFields) {
+                if (!field.value) {
+                    isValid = false; // Si hay algún campo requerido vacío
+                    field.setCustomValidity('Este campo es requerido.'); // Mensaje personalizado
+                    field.reportValidity(); // Mostrar mensaje de validación del navegador
+                }
+            }
+
+            console.log(ubicacion)
+
+            if (isValid) {
+                const formData = new FormData();
+                formData.append('id', formulario.id.value);
+                formData.append('capacidad_viandas', formulario.capacidad_viandas.value);
+                formData.append('fecha_funcionamiento', formulario.fecha_funcionamiento.value);
+                formData.append('estado_heladera', formulario.estado_heladera.value);
+                formData.append('temp_max', formulario.temp_max.value);
+                formData.append('temp_min', formulario.temp_min.value);
+                formData.append('provincia', formulario.provincia.value);
+
+                formData.append('calle', ubicacion.address);
+                formData.append('altura', ubicacion.street_number);
+                formData.append('ciudad', ubicacion.city);
+                formData.append('localidad', ubicacion.locality);
+                formData.append('codigoPostal', ubicacion.postal_code);
+                formData.append('latitud', ubicacion.coords.lat);
+                formData.append('longitud', ubicacion.coords.lng);
+                formData.append('puntoGeografico_id', formulario.puntoGeografico_id.value);
+                formData.append('direccion_id', formulario.direccion_id.value);
+                formData.append('modelo', formulario.modelo.value);
+
+                fetch('/heladeras/editar_heladera/{{heladera.id}}', {
+                    method: 'PUT',
+                    body: formData,
+                }).then(response => {
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Formulario enviado",
+                            text: "Gracias por colaborar",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            window.location.href = "/heladeras";
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al enviar el formulario",
+                        });
+                    }
+                }).catch(error => {
+                    console.error("Error al enviar el formulario:", error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Ocurrió un error al enviar el formulario",
+                    });
+                });
+            }
+
+        }
+
+    </script>
+{{/partial}}
+{{> templates/base}}

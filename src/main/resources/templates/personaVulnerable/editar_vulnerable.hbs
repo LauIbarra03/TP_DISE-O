@@ -1,0 +1,402 @@
+{{#partial "contenido"}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Modificar Persona Vulnerable</h3>
+            </div>
+            <div>
+                {{!-- <form method="POST" action="/persona_vulnerable/editar_vulnerable/{{personaVulnerable.id}}"> --}}
+                <form id="editar_persona_vulnerable">
+                    <input type="hidden" name="id" value="{{personaVulnerable.id}}">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="nombre">Nombre y apellido</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre"
+                                       value="{{personaVulnerable.nombre}}" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="fecha_nac">Fecha de nacimiento</label>
+                                <input type="date" class="form-control" id="fecha_nac"
+                                       name="fecha_nac"
+                                       value="{{personaVulnerable.fechaDeNacimiento}}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="donar_frecuencia" class="form-label">¿Desea ingresar la
+                                    dirección?</label>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="direccion_si" name="ingresarDireccion"
+                                           value="si"
+                                           class="form-check-input"
+                                           {{#if personaVulnerable.direccion.id}}checked{{/if}}
+                                           onchange="toggleDireccionField(this)">
+                                    <label for="direccion_si" class="form-check-label">Sí</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="direccion_no" name="ingresarDireccion"
+                                           value="no"
+                                           class="form-check-input" {{#unless
+                                                   personaVulnerable.direccion.id}}checked{{/unless}}
+                                           onchange="toggleDireccionField(this)">
+                                    <label for="direccion_no" class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="direccionFields"
+                         style="display: {{#if
+                                 personaVulnerable.direccion.id}}block{{else}}none{{/if}};">
+                        <input type="hidden" name="direccion_id"
+                               value="{{personaVulnerable.direccion.id}}">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="calle">Calle</label>
+                                    {{!-- <input type="hidden" name="calle_id"
+                                        value="{{personaVulnerable.direccion.calle.id}}"> --}}
+                                    <input type="text" class="form-control" id="calle" name="calle"
+                                           value="{{personaVulnerable.direccion.calle.nombre}}">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="altura">Altura</label>
+                                    <input type="number" class="form-control" id="altura"
+                                           name="altura"
+                                           value="{{personaVulnerable.direccion.altura}}">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="provincia">Provincia</label>
+                                    <select class="form-select" aria-label="contribucion"
+                                            id="provincia"
+                                            name="provincia" onchange="cargarLocalidades()"
+                                            required
+                                            value="{{personaVulnerable.direccion}}">
+                                        <option value="" selected disabled>Seleccione una
+                                            provincia
+                                        </option>
+                                        {{#each provincias}}
+                                            <option value="{{this.nombre}}">
+                                                {{this.nombre}}
+                                            </option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="localidad">Localidad</label>
+                                    <input type="text" class="form-control" id="localidad"
+                                           name="localidad"
+                                           value="{{personaVulnerable.direccion.localidad.nombre}}"
+                                           required>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="position: relative;">
+                            <div id="map-container" style="height: 50vh; width: 100%;"></div>
+                            <div id="ubicacion_info"
+                                 style="background-color: white; position:absolute; top: 10px; right: 10px; padding: 16px; border-radius: 5px; z-index: 999;">
+                            </div>
+                            <p>Corrobore la ubicación en el mapa antes de enviar el formulario</p>
+                        </div>
+                        <button type="button" class="btn btn-dark"
+                                onclick="fetchUbicacion('editar_persona_vulnerable')">
+                            Corroborar
+                        </button>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="donar_frecuencia" class="form-label">¿Desea ingresar el
+                                    documento?</label>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="documento_si" name="ingresarDocumento"
+                                           value="si"
+                                           class="form-check-input"
+                                           {{#if personaVulnerable.numeroDocumento}}checked{{/if}}
+                                           onchange="toggleDocumentoField(this)">
+                                    <label for="documento_si" class="form-check-label">Sí</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="documento_no" name="ingresarDocumento"
+                                           value="no"
+                                           class="form-check-input" {{#unless
+                                                   personaVulnerable.direccion.id}}checked{{/unless}}
+                                           onchange="toggleDocumentoField(this)">
+                                    <label for="documento_no" class="form-check-label">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="documentoFields"
+                         style="display: {{#if
+                                 personaVulnerable.numeroDocumento}}block{{else}}none{{/if}};">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-group mb-3">
+                                    <label for="tipo-documento">Tipo de documento</label>
+                                    <select class="form-select" aria-label="tipo-documento"
+                                            name="tipo_docu">
+                                        <option value="" disabled>Seleccione una opción</option>
+                                        {{#each tiposDocumento}}
+                                            <option value="{{this.name}}" {{#ifEq this.name
+                                                                                  personaVulnerable.tipoDocumento.name}}selected{{/ifEq}}>
+                                                {{descripcion}}
+                                            </option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="numero_docu">Número de documento</label>
+                                    <input type="text" class="form-control" id="numero_docu"
+                                           name="numero_docu"
+                                           value="{{personaVulnerable.numeroDocumento}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary"
+                            onclick="handleFormEditarPersonaVulnerable('editar_persona_vulnerable')">
+                        Actualizar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{#partial "scripts"}}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        let map = L.map('map-container').setView([-34.603722, -58.381592], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        let ubicacion = null;
+
+        const radioDireccion = document.querySelectorAll('input[name="ingresarDireccion"]');
+        radioDireccion.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value == 'si') {
+                    setTimeout(() => {
+                        map.invalidateSize();
+                    }, 10);
+                }
+            });
+        });
+
+        async function obtenerCoordenadas(direccion) {
+            const apiKey = "AIzaSyBWSEuIHch9iocb6VWOFh4amqcTgM0wxQs";
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(direccion)}&key=${apiKey}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error en la solicitud: ${response.status}`);
+                }
+                const data = await response.json();
+                if (data.status === "OK") {
+                    const resultados = data.results[0];
+                    console.log(resultados)
+                    const {lat, lng} = resultados.geometry.location;
+                    return {
+                        coords: {lat, lng},
+                        street_number: resultados.address_components.find(component => component.types.includes('street_number'))?.long_name || null,
+                        address: resultados.address_components.find(component => component.types.includes('route'))?.long_name || null,
+                        postal_code: resultados.address_components.find(component => component.types.includes('postal_code'))?.long_name || null,
+                        locality: resultados.address_components.find(component => component.types.includes('sublocality_level_1') || component.types.includes('locality'))?.long_name || null,
+                        city: resultados.address_components.find(component => component.types.includes('locality'))?.long_name || null,
+                        province: resultados.address_components.find(component => component.types.includes('administrative_area_level_1'))?.long_name || null,
+                        country: resultados.address_components.find(component => component.types.includes('country'))?.long_name || null,
+                    };
+
+                } else {
+                    throw new Error(`No se pudo obtener coordenadas: ${data.status}`);
+                }
+            } catch (error) {
+                console.error("Error al obtener coordenadas:", error);
+                return null;
+            }
+        }
+
+        function fetchUbicacion(formId) {
+            const formulario = document.getElementById(formId);
+            const calle = formulario.calle.value;
+            const altura = formulario.altura.value;
+            const localidad = formulario.localidad.value;
+            const provincia = formulario.provincia.value;
+
+            const direccion = `${calle} ${altura} ${localidad} ${provincia}`;
+
+            obtenerCoordenadas(direccion).then((obj) => {
+                if (obj) {
+                    console.log(obj);
+
+                    //eliminamos el marcador anterior
+                    map.eachLayer((layer) => {
+                        if (layer instanceof L.Marker) {
+                            map.removeLayer(layer);
+                        }
+                    });
+
+                    const {coords} = obj;
+                    map.setView([coords.lat, coords.lng], 15);
+                    L.marker([coords.lat, coords.lng]).addTo(map);
+                    //document.getElementById('sendPersonaJuridica').disabled = false;
+                    const ubicacionInfo = document.getElementById('ubicacion_info');
+                    ubicacionInfo.innerHTML = `
+                    <p>Dirección: ${obj.address || 'Desconocida'} ${obj.street_number || ''}</p>
+                    <p>Código Postal: ${obj.postal_code || 'Desconocido'}</p>
+                    <p>Ciudad: ${obj.city || 'Desconocida'}</p>
+                    <p>Localidad: ${obj.locality || 'Desconocida'}</p>
+                    <p>Provincia: ${obj.province}</p>
+                    <p>País: ${obj.country}</p>
+                `;
+                    ubicacion = obj;
+
+                }
+            });
+        }
+
+
+        function handleFormEditarPersonaVulnerable(formId) {
+            const formulario = document.getElementById(formId);
+            let isValid = true;
+
+            const requiredFields = formulario.querySelectorAll('[required]');
+            requiredFields.forEach(field => field.setCustomValidity(''));
+
+            for (const field of requiredFields) {
+                if (!field.value) {
+                    isValid = false; // Si hay algún campo requerido vacío
+                    field.setCustomValidity('Este campo es requerido.'); // Mensaje personalizado
+                    field.reportValidity(); // Mostrar mensaje de validación del navegador
+                }
+            }
+
+            if (!ubicacion && formulario.ingresarDireccion.value == 'si') {
+                isValid = false;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Debe corroborar la ubicación en el mapa antes de enviar el formulario'
+                });
+            }
+
+            if (isValid) {
+                const formData = new FormData();
+
+                formData.append('id', formulario.id.value);
+                formData.append('nombre', formulario.nombre.value);
+                formData.append('fecha_nac', formulario.fecha_nac.value);
+
+                formData.append('ingresarDireccion', formulario.ingresarDireccion.value);
+                formData.append('ingresarDocumento', formulario.ingresarDocumento.value);
+
+                if (formulario.ingresarDireccion.value == 'si' && ubicacion) {
+                    formData.append('calle', ubicacion.address);
+                    formData.append('altura', ubicacion.street_number);
+                    formData.append('ciudad', ubicacion.city);
+                    formData.append('localidad', ubicacion.locality);
+                    formData.append('provincia', formulario.provincia.value);
+                    formData.append('codigoPostal', ubicacion.postal_code);
+                    formData.append('latitud', ubicacion.coords.lat);
+                    formData.append('longitud', ubicacion.coords.lng);
+                }
+
+                if (formulario.ingresarDocumento.value == 'si') {
+                    formData.append('tipo_docu', formulario['tipo_docu'].value);
+                    formData.append('numero_docu', formulario.numero_docu.value);
+                }
+
+                fetch(`/persona_vulnerable/editar_vulnerable/{{personaVulnerable.id}}`, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Persona Vulnerable actualizada',
+                            text: 'La persona vulnerable ha sido actualizada correctamente'
+                        }).then(() => {
+                            window.location.href = '/persona_vulnerable';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Ocurrió un error al actualizar la persona vulnerable'
+                        });
+                    }
+                }).catch(error => {
+                    console.error('Error al actualizar la persona vulnerable:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ocurrió un error al actualizar la persona vulnerable'
+                    });
+                });
+
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const direccion = `${document.getElementById('calle').value} ${document.getElementById('altura').value} ${document.getElementById('localidad').value}`;
+            if (direccion) {
+                obtenerCoordenadas(direccion).then(obj => {
+                    if (obj) {
+
+                        //eliminamos el marcador anterior
+                        map.eachLayer((layer) => {
+                            if (layer instanceof L.Marker) {
+                                map.removeLayer(layer);
+                            }
+                        });
+
+                        const {coords} = obj;
+                        map.setView([coords.lat, coords.lng], 15);
+                        L.marker([coords.lat, coords.lng]).addTo(map);
+                        const ubicacionInfo = document.getElementById('ubicacion_info');
+                        document.getElementById('provincia').value = obj.province;
+                        ubicacionInfo.innerHTML = `
+                        <p>Dirección: ${obj.address || 'Desconocida'} ${obj.street_number || ''}</p>
+                        <p>Código Postal: ${obj.postal_code || 'Desconocido'}</p>
+                        <p>Ciudad: ${obj.city || 'Desconocida'}</p>
+                        <p>Localidad: ${obj.locality || 'Desconocida'}</p>
+                        <p>Provincia: ${obj.province}</p>
+                        <p>País: ${obj.country}</p>
+                    `;
+                        ubicacion = obj;
+                    }
+                })
+
+            }
+        });
+
+
+    </script>
+
+
+{{/partial}}
+{{> templates/base}}

@@ -1,0 +1,103 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Donaciones</h3>
+            </div>
+            <div>
+                <div class="d-grid gap-2 d-md-block mb-3 text-center">
+                    {{#if user.isAdmin}}
+                        <button class="btn btn-primary" data-form="form1"
+                                onclick="window.location.href='/colaboraciones/formulario/donacion_vianda'">
+                            Donación de
+                            vianda
+                        </button>
+                        <button class="btn btn-warning" data-form="form2"
+                                onclick="window.location.href='/colaboraciones/formulario/donacion_dinero'">
+                            Donación de
+                            dinero
+                        </button>
+                        <button class="btn btn-success" data-form="form3"
+                                onclick="window.location.href='/colaboraciones/formulario/distribucion_viandas'">
+                            Distribución de viandas
+                        </button>
+                        <button class="btn btn-info" data-form="form4"
+                                onclick="window.location.href='/colaboraciones/formulario/hacerse_cargo_heladera'">
+                            Hacerse cargo de heladera
+                        </button>
+                        <button class="btn btn-dark" data-form="form5"
+                                onclick="window.location.href='/colaboraciones/formulario/realizar_oferta'">
+                            Realizar
+                            oferta/agregar producto
+                        </button>
+                        <button class="btn btn-danger" data-form="form6"
+                                onclick="window.location.href='/colaboraciones/formulario/registrar_vulnerable'">
+                            Registrar persona vulnerable
+                        </button>
+                    {{else if user.esHumana}}
+                        {{#if user.colaborador.puedeDonarVianda}}
+                            <button class="btn btn-primary" data-form="form1"
+                                    onclick="window.location.href='/colaboraciones/formulario/donacion_vianda'">
+                                Donación
+                                de vianda
+                            </button>
+                        {{/if}}
+                        {{#if user.colaborador.puedeDonarDinero}}
+                            <button class="btn btn-warning" data-form="form2"
+                                    onclick="window.location.href='/colaboraciones/formulario/donacion_dinero'">
+                                Donación
+                                de dinero
+                            </button>
+                        {{/if}}
+                        {{#if user.colaborador.puedeDistribuirViandas}}
+                            <button class="btn btn-success" data-form="form3"
+                                    onclick="window.location.href='/colaboraciones/formulario/distribucion_viandas'">
+                                Distribución de viandas
+                            </button>
+                        {{/if}}
+                        {{#if user.colaborador.puedeRegistrarPersonaVulnerable}}
+                            <button class="btn btn-danger" data-form="form6"
+                                    onclick="window.location.href='/colaboraciones/formulario/registrar_vulnerable'">
+                                Registrar persona vulnerable
+                            </button>
+                        {{/if}}
+                    {{else if user.esJuridica}}
+                        {{#if user.colaborador.puedeDonarDinero}}
+                            <button class="btn btn-warning" data-form="form2"
+                                    onclick="window.location.href='/colaboraciones/formulario/donacion_dinero'">
+                                Donación
+                                de dinero
+                            </button>
+                        {{/if}}
+                        {{#if user.colaborador.puedeHacerseCargoHeladera}}
+                            <button class="btn btn-info" data-form="form4"
+                                    onclick="window.location.href='/colaboraciones/formulario/hacerse_cargo_heladera'">
+                                Hacerse cargo de heladera
+                            </button>
+                        {{/if}}
+                        {{#if user.colaborador.puedeRealizarOfertas}}
+                            <button class="btn btn-dark" data-form="form5"
+                                    onclick="window.location.href='/colaboraciones/formulario/realizar_oferta'">
+                                Realizar
+                                oferta/agregar producto
+                            </button>
+                        {{/if}}
+
+
+                    {{/if}}
+
+
+
+
+                </div>
+
+                {{#block "formulario"}}
+                {{/block}}
+            </div>
+        </div>
+
+    </div>
+    {{#block "scripts_forms"}}
+    {{/block}}
+{{/partial}}
+{{> templates/base}}

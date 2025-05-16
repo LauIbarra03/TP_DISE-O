@@ -1,0 +1,69 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Formulario de Registro de Visita Técnica</h3>
+            </div>
+            <div>
+                <form method="POST" action="/visitasTecnicas/formulario_visitaTecnica"
+                      id="formVisitaTecnica"
+                      enctype="multipart/form-data"
+                      data-url="/visitasTecnicas/formulario_visitaTecnica">
+
+                    <div class="form-group mb-3">
+                        <label for="visita_incidente_id">Seleccione el incidente para el cual desea
+                            cargar la
+                            visita</label>
+                        <select class="form-select" id="visita_incidente_id"
+                                aria-label="visita_incidente"
+                                name="visita_incidente_id" required>
+                            <option value="" disabled selected>Seleccione un incidente</option>
+                            {{#each incidentes}}
+                                <option value="{{this.id}}">#{{this.id}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group mb-3">
+                                <label for="descripcion">Descripción de la visita</label>
+                                <textarea class="form-control" id="descripcion" name="descripcion"
+                                          rows="3"
+                                          placeholder="Ingrese la descripción del incidente" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group mb-3">
+                                <label for="foto">Foto de la visita</label>
+                                <input type="file" class="form-control" id="foto" name="foto">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group mb-3">
+                                <label for="resuelto">¿Incidente resuelto?</label>
+                                <select class="form-select" id="resuelto" name="resuelto" required>
+                                    <option value="" disabled selected>Seleccione una opción
+                                    </option>
+                                    <option value="true">Sí</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="boton_carga_visita"
+                            onclick="initializeFormHandler('formVisitaTecnica')">Registrar Visita
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

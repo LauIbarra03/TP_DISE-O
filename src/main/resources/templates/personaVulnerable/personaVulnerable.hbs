@@ -1,0 +1,53 @@
+{{#partial "contenido"}}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3>Personas vulnerables</h3>
+                <div>
+                    {{#if user.isAdmin}}
+                        <a href="/colaboraciones/formulario/registrar_vulnerable"
+                           class="btn btn-primary">Agregar
+                            persona vulnerable</a>
+                    {{else if user.esHumana}}
+                        <a href="/colaboraciones/formulario/registrar_vulnerable"
+                           class="btn btn-primary">Agregar
+                            persona vulnerable</a>
+                    {{else }}
+
+                    {{/if}}
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <th>Nombre</th>
+                <th>Domicilio</th>
+                <th>Número de documento</th>
+                </thead>
+                <tbody>
+                {{#each vulnerables}}
+                    <tr onclick="window.location.href='/persona_vulnerable/detalle_vulnerable/{{this.id}}'"
+                        style="cursor: pointer;">
+                        <th>{{this.nombre}}</th>
+                        <th>
+                            {{#if this.direccion}}
+                                {{this.direccion.calle.nombre}} {{this.direccion.altura}}
+                                , {{this.direccion.codigoPostal}}
+                            {{else}}
+                                No disponible
+                            {{/if}}
+                        </th>
+                        <th>
+                            {{#if this.numeroDocumento}}
+                                {{this.tipoDocumento}}: {{this.numeroDocumento}}
+                            {{else}}
+                                No disponible
+                            {{/if}}
+                        </th>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}

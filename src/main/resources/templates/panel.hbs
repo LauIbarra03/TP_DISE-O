@@ -1,0 +1,351 @@
+{{#partial "contenido"}}
+    <div class="container-fluid">
+        <h1 class="mb-4 text-center">Bienvenido a Compartir es Cuidar ♥</h1>
+        <h2 class="text-left mb-4">Resumen de Actividad</h2>
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Colaboradores</h5>
+                        <p class="card-text display-4">{{totalColaboradores }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Viandas Entregadas</h5>
+                        <p class="card-text display-4">{{viandasEntregadas }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Heladeras Activas</h5>
+                        <p class="card-text display-4">{{heladerasActivas}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-3">
+                <div class="card bg-warning text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">Personas Asistidas</h5>
+                        <p class="card-text display-4">{{personasAsistidas}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <h2 class="text-left mb-4">Algunas secciones</h2>
+            {{#if user.isAdmin}}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-people-fill text-primary me-2"></i>Colaboradores
+                                </h5>
+                                <p class="card-text">Gestiona y visualiza la información de
+                                    nuestros
+                                    valiosos
+                                    colaboradores.</p>
+                                <a href="/colaboradores" class="btn btn-outline-primary">Ver
+                                    Colaboradores</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-snow2 text-info me-2"></i>Heladeras
+                                </h5>
+                                <p class="card-text">Monitorea el estado y la ubicación de nuestras
+                                    heladeras
+                                    solidarias.</p>
+                                <a href="/heladeras" class="btn btn-outline-info">Ver Heladeras</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-heart-fill text-danger me-2"></i>Personas
+                                    Vulnerables</h5>
+                                <p class="card-text">Accede a la información de las personas que
+                                    necesitan nuestra
+                                    ayuda.</p>
+                                <a href="/persona_vulnerable" class="btn btn-outline-danger">Ver
+                                    Personas
+                                    Vulnerables</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-box2-heart-fill text-success me-2"></i>Viandas
+                                </h5>
+                                <p class="card-text">Gestiona las viandas disponibles y su
+                                    distribución.</p>
+                                <a href="/viandas" class="btn btn-outline-success">Ver Viandas</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-graph-up-arrow text-warning me-2"></i>Colaboraciones
+                                </h5>
+                                <p class="card-text">Revisa y gestiona las colaboraciones
+                                    realizadas.</p>
+                                <a href="/colaboraciones" class="btn btn-outline-warning">Ver
+                                    Colaboraciones</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-gear-fill text-secondary me-2"></i>Configuración
+                                </h5>
+                                <p class="card-text">Ajusta la configuración de tu cuenta y
+                                    preferencias.</p>
+                                <a href="/perfil/colaborador/{{user.colaborador.id}}"
+                                   class="btn btn-outline-secondary">Ir a
+                                    Configuración</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{else if user.esHumana}}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-snow2 text-info me-2"></i>Heladeras
+                                </h5>
+                                <p class="card-text">Monitorea el estado y la ubicación de nuestras
+                                    heladeras
+                                    solidarias.</p>
+                                <a href="/heladeras" class="btn btn-outline-info">Ver Heladeras</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-heart-fill text-danger me-2"></i>Personas
+                                    Vulnerables</h5>
+                                <p class="card-text">Accede a la información de las personas que
+                                    necesitan nuestra
+                                    ayuda.</p>
+                                <a href="/persona_vulnerable" class="btn btn-outline-danger">Ver
+                                    Personas
+                                    Vulnerables</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-box2-heart-fill text-success me-2"></i>Viandas
+                                </h5>
+                                <p class="card-text">Gestiona las viandas disponibles y su
+                                    distribución.</p>
+                                <a href="/viandas" class="btn btn-outline-success">Ver Viandas</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-graph-up-arrow text-warning me-2"></i>Colaboraciones
+                                </h5>
+                                <p class="card-text">Revisa y gestiona las colaboraciones
+                                    realizadas.</p>
+                                <a href="/colaboraciones" class="btn btn-outline-secondary">Ver
+                                    Colaboraciones</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-graph-up-arrow text-warning me-2"></i>Suscripciones
+                                </h5>
+                                <p class="card-text">Revisa y gestiona tus suscripciones.</p>
+                                <a href="/suscripcion" class="btn btn-outline-primary">Ver
+                                    Suscripciones</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-graph-up-arrow text-warning me-2"></i>Reporte
+                                    falla Técnica</h5>
+                                <p class="card-text">Realizar reporte de falla técnica.</p>
+                                <a href="/reportar_falla_tecnia" class="btn btn-outline-warning">Ir
+                                    al reporte</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-gear-fill text-secondary me-2"></i>Configuración
+                                </h5>
+                                <p class="card-text">Ajusta la configuración de tu cuenta y
+                                    preferencias.</p>
+                                <a href="/perfil/colaborador/{{user.colaborador.id}}"
+                                   class="btn btn-outline-secondary">Ir a
+                                    Configuración</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{else if user.esJuridica}}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-snow2 text-info me-2"></i>Heladeras
+                                </h5>
+                                <p class="card-text">Monitorea el estado y la ubicación de nuestras
+                                    heladeras
+                                    solidarias.</p>
+                                <a href="/heladeras" class="btn btn-outline-info">Ver Heladeras</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-heart-fill text-danger me-2"></i>Personas
+                                    Vulnerables</h5>
+                                <p class="card-text">Accede a la información de las personas que
+                                    necesitan nuestra
+                                    ayuda.</p>
+                                <a href="/persona_vulnerable" class="btn btn-outline-danger">Ver
+                                    Personas
+                                    Vulnerables</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-box2-heart-fill text-success me-2"></i>Viandas
+                                </h5>
+                                <p class="card-text">Gestiona las viandas disponibles y su
+                                    distribución.</p>
+                                <a href="/viandas" class="btn btn-outline-success">Ver Viandas</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-graph-up-arrow text-warning me-2"></i>Colaboraciones
+                                </h5>
+                                <p class="card-text">Revisa y gestiona las colaboraciones
+                                    realizadas.</p>
+                                <a href="/colaboraciones" class="btn btn-outline-warning">Ver
+                                    Colaboraciones</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-gear-fill text-secondary me-2"></i>Configuración
+                                </h5>
+                                <p class="card-text">Ajusta la configuración de tu cuenta y
+                                    preferencias.</p>
+                                <a href="/perfil/colaborador/{{user.colaborador.id}}"
+                                   class="btn btn-outline-secondary">Ir a
+                                    Configuración</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{else if user.esTecnico}}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-snow2 text-info me-2"></i>Incidente
+                                </h5>
+                                <p class="card-text">Accede a los inicidentes dentro de su
+                                    localidad.</p>
+                                <a href="/incidentes" class="btn btn-outline-info">Ver
+                                    Incidente</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-heart-fill text-danger me-2"></i>Visitas
+                                    Tecnicas
+                                </h5>
+                                <p class="card-text">Monitorea y revisa todas las visitas técnicas
+                                    registradas.</p>
+                                <a href="/visitasTecnicas" class="btn btn-outline-danger">Ver
+                                    Visitas Tecnicas</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-box2-heart-fill text-success me-2"></i>Registrar
+                                    Visita</h5>
+                                <p class="card-text">Registra una nueva visita técnica.</p>
+                                <a href="/visitasTecnicas/formulario_visitaTecnica"
+                                   class="btn btn-outline-success">Registrar
+                                    Visita</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title"><i
+                                        class="bi bi-gear-fill text-secondary me-2"></i>Configuración
+                                </h5>
+                                <p class="card-text">Ajusta la configuración de tu cuenta y
+                                    preferencias.</p>
+                                <a href="/perfil/tecnico/{{user.tecnico.id}}"
+                                   class="btn btn-outline-secondary">Ir a
+                                    Configuración</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+{{/partial}}
+{{> templates/base}}
